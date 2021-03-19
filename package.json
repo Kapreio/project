@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "set NODE_ENV=dev && webpack-dev-server --open --host 192.168.10.240",
+    "dev": "set NODE_ENV=dev && webpack-dev-server --open",
     "build": "set NODE_ENV=prod && webpack -p",
     "lint": "set NODE_ENV=lint && webpack-dev-server --open",
     "serve": "http-server ./dist -p 8888 -o",
@@ -25,6 +25,7 @@
     "style-loader": "^0.18.2",
     "url-loader": "^0.5.9",
     "webpack": "^3.11.0",
+    "webpack-cli": "^3.0.3",
     "webpack-dev-server": "^2.7.1",
     "webpack-merge": "^4.1.0"
   }
