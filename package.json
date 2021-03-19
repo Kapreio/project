@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "set NODE_ENV=dev && webpack-dev-server --open",
+    "dev": "set NODE_ENV=dev && webpack-dev-server --open --host 192.168.10.240",
     "build": "set NODE_ENV=prod && webpack -p",
     "lint": "set NODE_ENV=lint && webpack-dev-server --open",
     "serve": "http-server ./dist -p 8888 -o",

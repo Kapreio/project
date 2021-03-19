@@ -4,6 +4,9 @@ module.exports = {
     commonjs: true,
     es6: true,
     node: true,
+  },  
+  globals: {
+    AMap: true,
   },
   extends: 'eslint:recommended',
   parserOptions: {
@@ -16,5 +19,6 @@ module.exports = {
     'no-unused-vars': ['warn'],
     'semi': ['error', 'never'],
     'no-console': 0,
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
   },
 }
