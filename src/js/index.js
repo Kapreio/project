@@ -1,7 +1,5 @@
 import '../css/common.css'
 import '../css/index.less'
-import '../img/marker.png'
-import '../img/marker_off.png'
 import MapClass from './mapClass.js'
 const markerList = [
   {

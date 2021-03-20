@@ -1,7 +1,20 @@
+import '../img/marker.png'
+import '../img/marker_off.png'
+import '../img/marker_big.png'
+const iconSize = new AMap.Size(64, 70)
+const iconSelectedSize = new AMap.Size(110, 120)
+const markerOffset = new AMap.Pixel(-32,-70)
+const bigMarkerOffset = new AMap.Pixel(-55,-120)
+const infoOffset = new AMap.Pixel(0,-125)
 const defaultIconOpts = {
-  size: new AMap.Size(64, 70),
+  size: iconSize,
   image: 'img/marker.png',
-  imageSize: new AMap.Size(64, 70),
+  imageSize: iconSize,
+}
+const selectedIconOpts = {
+  size: iconSelectedSize,
+  image: 'img/marker.png',
+  imageSize: iconSelectedSize,
 }
 function getInfoDom(opts) {
   return `
@@ -40,6 +53,15 @@ export default class MapClass{
     this.outIcon = this.createIcon(Object.assign(opt,{image: 'img/marker_off.png'}))
     return this.outIcon
   }
+  createSelectIcon () {
+    this.selectedIcon = this.createIcon(selectedIconOpts)
+    return this.selectedIcon
+  }
+  createOfflineSelectIcon () {
+    let opt = Object.assign({},selectedIconOpts)
+    this.offlineSelectedIcon = this.createIcon(Object.assign(opt,{image: 'img/marker_off.png'}))
+    return this.offlineSelectedIcon
+  }
   createMarker (data) {
     let icon
     let marker 
@@ -58,7 +80,7 @@ export default class MapClass{
     marker = new AMap.Marker({
       position: new AMap.LngLat(...data.position),
       icon,
-      offset:data.offset || new AMap.Pixel(-32,-70),
+      offset:data.offset || markerOffset,
       title:data.title || null,
     })
     marker.data = data
@@ -76,7 +98,7 @@ export default class MapClass{
       isCustom: true,
       closeWhenClickMap: true,
       content: getInfoDom(opts),
-      offset: new AMap.Pixel(16, -45),
+      offset: infoOffset,
     })
   }
   addMarkers (list) {
@@ -89,10 +111,20 @@ export default class MapClass{
     for (let marker of this.markers) {
       if(!marker.info) {
         marker.info = this.createInform(marker.data)
+        marker.info.on('close',()=>{
+          marker.data.offline ?  marker.setIcon(this.outIcon): marker.setIcon(this.icon)
+          marker.setOffset(markerOffset)
+        })
       }
       marker.off('click')
-      marker.on('click', function() {
-        this.info.open(this.getMap(), this.getPosition())
+      marker.on('click', () => {
+        marker.info.open(marker.getMap(), marker.getPosition())
+        if(marker.data.offline) {
+          this.offlineSelectedIcon ? marker.setIcon(this.offlineSelectedIcon) : marker.setIcon(this.createOfflineSelectIcon())
+        } else {
+          this.selectedIcon ? marker.setIcon(this.selectedIcon) : marker.setIcon(this.createSelectIcon())
+        }
+        marker.setOffset(bigMarkerOffset)
       })
     }
   }
