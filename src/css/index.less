@@ -37,8 +37,13 @@ a {
         border-radius: 50%;
         box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
         background: #fff url('../img/locate_icon.png') center/.48rem no-repeat;
+        transition: all .3s;
         &.locate {
             left: .4rem;
+        }
+        &.locate[locating=true]{
+            background-color: gray;
+            background-size: .32rem .32rem;
         }
         &.indu {
             background-image: url('../img/indu_icon.png');

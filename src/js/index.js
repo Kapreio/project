@@ -25,9 +25,14 @@ let geolocation
 mapInst.addMarkers(markerList).addInfos()
 geolocation = mapInst.initGeolocation()
 locateBtn.addEventListener('click',function(){
-  geolocation.getCurrentPosition((result)=>{
-    console.log(result,'要开始请求数据了')
-  })
+  if (this.getAttribute('locating') !== true) {
+    this.setAttribute('locating',true)
+    geolocation.getCurrentPosition((result)=>{
+      this.setAttribute('locating',false)
+      console.log(result,'要开始请求数据了')
+    })
+  }
+  
 })
 console.log(geolocation)
 window.mapInst = mapInst
