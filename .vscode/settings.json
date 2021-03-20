@@ -3,5 +3,6 @@
     "eslint.autoFixOnSave": true,
     "eslint.options": { 
         "configFile":"./eslintrc.js"
-    }
+    },
+    "eslint.validate": ["javascript"]
 }
