@@ -1,11 +1,94 @@
-h1{
+h1 {
     color: red;
 }
-html,body{
+
+html,
+body {
     width: 100%;
     height: 100%;
 }
-#mapContain{
+
+#mapContain {
     width: 100%;
     height: 100%;
+}
+
+.amap-logo,
+.amap-copyright {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+.popup-wrap {
+    padding: .3rem;
+    width: 6rem;
+    height: 2.78rem;
+    font-family: PingFangSC;
+    border-radius: .16rem;
+    background-color: #ffffff;
+    box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    .title {
+        width: 100%;
+        height: .5rem;
+        font-size: 36px;
+        text-align: left;
+        color: #000;
+        &::after {
+            padding: 4px 12px;
+            display: inline;
+            font-size: 24px;
+            color: #fff;
+            content: '\6b63\5e38\8425\4e1a';
+            border-radius: 4px;
+            background-color: #73b34f;
+        }
+    }
+    .address {
+        margin: .1rem 0 .2rem;
+        width: 100%;
+        height: .66rem;
+        line-height: .32rem;
+        font-size: 24px;
+        color: #9b9b9b;
+    }
+    .opreationg-btns {
+        width: 100%;
+        height: .72rem;
+        &>a {
+            display: inline-block;
+            width: 2.40rem;
+            height: .72rem;
+            color: #ffffff;
+            font-size: 28px;
+            line-height: .72rem;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 36px;
+            background-image: linear-gradient(to top, #e6281b, #f56853);
+            box-shadow: 0 2px 8px 0 rgba(237, 60, 42, 0.5);
+            &>span {
+                padding: 0 0 0 .42rem;
+                background: transparent url('../img/navigation.png') left center/.32rem .32rem no-repeat;
+            }
+        }
+        &>a.go-queue {
+            background-image: linear-gradient(to bottom, #fbd249, #f5a623);
+            box-shadow: 0 2px 8px 0 rgba(248, 185, 51, 0.5);
+            &>span {
+                padding: 0 0 0 .46rem;
+                background: transparent url('../img/radio.png')  left center/.36rem .28rem no-repeat;
+            }
+        }
+    }
+    &.offline {
+        height: 1.86rem;
+        .opreationg-btns {
+            display: none;
+        }
+        .title::after {
+            content: '\6682\505c\8425\4e1a';
+            background-color: #a1a2a9;
+        }
+    }
 }
