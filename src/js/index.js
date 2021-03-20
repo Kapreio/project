@@ -18,8 +18,16 @@ const markerList = [
     title:'网点3',
   },
 ]
-
+const locateBtn = document.getElementById('locateBtn')
 let mapInst = new MapClass('mapContain',{})
+let geolocation
 
 mapInst.addMarkers(markerList).addInfos()
+geolocation = mapInst.initGeolocation()
+locateBtn.addEventListener('click',function(){
+  geolocation.getCurrentPosition((result)=>{
+    console.log(result,'要开始请求数据了')
+  })
+})
+console.log(geolocation)
 window.mapInst = mapInst

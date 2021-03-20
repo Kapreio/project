@@ -24,7 +24,7 @@ function getInfoDom(opts) {
         </div>
         <p class="address">${opts.address}</p>
         <div class='opreationg-btns'>
-          <a href='navigation?id=${opts.id}'><span>2.4km</span></a>
+          <a href='navigation?id=${opts.id}'><span id='distance'>2.4km</span></a>
           <a  class="go-queue" href='queue?id=${opts.id}'><span>查看排队</span></a>
         </div>
       </div> 
@@ -40,6 +40,8 @@ export default class MapClass{
       center,
       zoom,
     })
+    this.geolocation = null
+    this.currentPosition = null
   }
   createIcon (opts = {}) {
     return new AMap.Icon(opts)
@@ -101,6 +103,9 @@ export default class MapClass{
       offset: infoOffset,
     })
   }
+  getDistance(point) {
+    return (AMap.GeometryUtil.distance(this.currentPosition, point)/1000).toFixed(2) + 'km'
+  }
   addMarkers (list) {
     let markers =  Object.prototype.toString.call(list).slice(8,-1) === 'Array' ? this.createMarkers(list) : this.createMarker(list)
     this.markers.push(...markers)
@@ -118,7 +123,13 @@ export default class MapClass{
       }
       marker.off('click')
       marker.on('click', () => {
-        marker.info.open(marker.getMap(), marker.getPosition())
+        marker.info.open(marker.getMap(), marker.getPosition())        
+        setTimeout(()=>{
+          let distanceDom = document.getElementById('distance')
+          if (this.currentPosition) {
+            distanceDom.innerHTML = this.getDistance(marker.getPosition())
+          }
+        })
         if(marker.data.offline) {
           this.offlineSelectedIcon ? marker.setIcon(this.offlineSelectedIcon) : marker.setIcon(this.createOfflineSelectIcon())
         } else {
@@ -127,5 +138,24 @@ export default class MapClass{
         marker.setOffset(bigMarkerOffset)
       })
     }
+    return this
+  }
+  initGeolocation () {
+    this.map.plugin('AMap.Geolocation',  ()=> {
+      this.geolocation = new AMap.Geolocation({
+        enableHighAccuracy: true,
+        timeout: 10000,
+        showButton: false,
+       
+      })
+      this.map.addControl(this.geolocation)
+      AMap.event.addListener(this.geolocation, 'complete', ({position})=>{
+        this.currentPosition = position ? [position.lng,position.lat] : null
+      })
+      AMap.event.addListener(this.geolocation, 'error', ()=>{
+        this.currentPosition = null
+      })
+    })
+    return this.geolocation
   }
 }
