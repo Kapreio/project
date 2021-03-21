@@ -10,6 +10,6 @@ module.exports = {
   ],
   cssPublicPath:'../',
   imgOutputPath:'img/',
-  cssOutputPath:'./css/styles.css',
+  cssOutputPath:'./css/[name].css',
   devServerOutputPath:'../dist',
 }
