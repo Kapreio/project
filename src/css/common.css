@@ -7,11 +7,13 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+
 }
 
 body {
     font-size: 14px;
     font-family: 'PingFangSC', 'Microsoft YaHei', Arial, Helvetica, sans-serif, '宋体';
+    text-align: center;
 }
 
 div {
