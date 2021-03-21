@@ -82,7 +82,7 @@ module.exports = {
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
-        use: {loader: 'file-loader', options: {name: '[name].[ext]', outputPath: config.imgOutputPath}},
+        use: {loader: 'file-loader', options: {limit: 10000,name: '[name].[ext]', outputPath: config.imgOutputPath}},
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
