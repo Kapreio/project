@@ -19,6 +19,7 @@ const markerList = [
   },
 ]
 const locateBtn = document.getElementById('locateBtn')
+const scanBtn = document.getElementById('scanBtn')
 let mapInst = new MapClass('mapContain',{})
 let geolocation
 
@@ -34,5 +35,7 @@ locateBtn.addEventListener('click',function(){
   }
   
 })
-console.log(geolocation)
+scanBtn.addEventListener('click',function(){
+  location.href = 'wash.html'
+})
 window.mapInst = mapInst
