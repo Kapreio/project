@@ -15,6 +15,10 @@ module.exports = {
       page:'login',
       title:'登陆/注册',
     },
+    {
+      page:'protocol',
+      title:'界上无人洗车免责条款',
+    },
   ],
   cssPublicPath:'../',
   imgOutputPath:'img/',
