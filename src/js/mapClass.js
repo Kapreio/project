@@ -25,7 +25,7 @@ function getInfoDom(opts) {
         <p class="address">${opts.address}</p>
         <div class='opreationg-btns'>
           <a href='navigation.html?id=${opts.id}'><span id='distance'>2.4km</span></a>
-          <a  class="go-queue" href='queue?id=${opts.id}'><span>查看排队</span></a>
+          <a  class="go-queue" href='queue.html?id=${opts.id}'><span>查看排队</span></a>
         </div>
       </div> 
   `
