@@ -19,6 +19,10 @@ module.exports = {
       page:'protocol',
       title:'界上无人洗车免责条款',
     },
+    {
+      page:'wash',
+      title:'界上无人洗车',
+    },
   ],
   cssPublicPath:'../',
   imgOutputPath:'img/',
