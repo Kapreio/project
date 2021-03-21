@@ -1,0 +1,90 @@
+.input-nav{
+    position: relative;
+    margin:.6rem auto .3rem;
+    padding: 0 0 0 .86rem;
+    width: 6rem;
+    height: .9rem;    
+    line-height: .9rem;
+    border-radius: .45rem;
+    border: solid 1px #000;
+    overflow: hidden;
+    font-size: .28rem;
+    text-align: left;
+    color: #000;
+    &[error=true]{
+        border-color:#e6281b; 
+
+        span.error-message{
+            position: absolute;
+            top:0;
+            bottom:0;
+            right: .4rem;
+            width: auto;
+            display: inline-block;
+            font-size: .24rem;
+            text-align: right;
+            color:#e6281b; 
+        }
+    }
+    input{
+        width: 100%;
+        height: .9rem;
+        font-size: .28rem;
+        border: none;
+        box-shadow: none;
+    }
+    input:focus{
+        outline: none;
+    }
+    &.tel{
+        background: transparent url('../img/icon_phone.png') .4rem center/.36rem no-repeat;
+    }
+    &.sms-code{
+        padding-right: 2.76rem;
+        background: transparent url('../img/icon_mess.png') .4rem center/.36rem no-repeat;
+        .get-code{
+            position: absolute;
+            top:0;
+            bottom: 0;            
+            right: 0;
+            width: 2.76rem;
+            height: .4rem;
+            margin: auto;
+            padding-left: .32rem;
+            line-height: .36rem;
+            border-left: 1px solid #000;
+        }
+        &[countDown=true] .get-code{
+            color: gray;
+        }
+    }
+  }
+  .login-btn {
+    margin:.6rem auto 0;
+    width: 6rem;
+    height: .9rem;
+    opacity: 0.3;
+    line-height: .9rem;
+    font-size: .32rem;
+    text-align: center;
+    color: #ffffff;
+    border-radius: .45rem;
+    background-image: linear-gradient(to top, #e6281b, #f56853);
+
+    &[enable=true]{
+        opacity: 1;
+    }
+  }
+  p.protocol {
+    position: absolute;
+    bottom: .3rem;
+    width: 100%;
+    height: .33rem;
+    font-size: .24rem;
+    text-align: center;
+    
+    color: #000000;
+    a{
+        color: #4a90e2;
+    }
+  }

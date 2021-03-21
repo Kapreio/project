@@ -37,6 +37,15 @@
     </script>
 </head>
 <body>
-    login
+    <div class="input-nav tel">
+        <input id="telInput" type="text"  placeholder="请输入您的手机号">
+        <span class="error-message">手机号位数错误！</span>  
+    </div>
+    <div class="input-nav sms-code">
+        <input id="codeInput" type="text" placeholder="请输入验证码">
+        <div id="getCode" class="get-code">获取短信验证码</div>
+    </div>
+    <div id="loginBtn" class="login-btn">登陆</div>
+    <p class="protocol">登录即表示您阅读并同意<a href="protocol.html">《界上无人洗车免责条款》</a></p>
 </body>
 </html>
