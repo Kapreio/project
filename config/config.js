@@ -31,6 +31,10 @@ module.exports = {
       page:'mine',
       title:'我的',
     },
+    {
+      page:'balance',
+      title:'帐户余额',
+    },
   ],
   cssPublicPath:'../',
   imgOutputPath:'img/',
