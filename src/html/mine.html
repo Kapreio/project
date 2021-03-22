@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=0.5,maximum-scale=0.5,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%= htmlWebpackPlugin.options.title%></title>
+    <script>
+        // 计算html font-size
+        // 保证7.5rem等于屏幕宽度
+        (function(f, j) {
+            var i = document,
+                d = window;
+            var b = i.documentElement;
+            var c;
+
+            function g() {
+                var k = b.getBoundingClientRect().width;
+                if (!j) {
+                    j = 1080
+                }
+                if (k > j) {
+                    k = j
+                }
+                var l = k * 100 / f;
+                b.style.fontSize = (l > 100 ? 100 : l) + "px";
+            }
+            g();
+            d.addEventListener('resize',g)
+            d.addEventListener("pageshow", function(k) {
+                if (k.persisted) {
+                    clearTimeout(c);
+                    c = setTimeout(g, 300)
+                }
+            }, false)
+        })(750, 1080); 
+    </script>
+</head>
+<body>
+我的页面
+</body>
+</html>

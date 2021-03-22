@@ -27,6 +27,10 @@ module.exports = {
       page:'instructions',
       title:'洗车说明',
     },
+    {
+      page:'mine',
+      title:'我的',
+    },
   ],
   cssPublicPath:'../',
   imgOutputPath:'img/',
