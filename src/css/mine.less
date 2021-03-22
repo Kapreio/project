@@ -1,0 +1,88 @@
+.top-nav{
+    position: relative;
+    padding: 2.2rem 0 0;
+    width: 100%;
+    height: 3.6rem;
+    font-size: 28px;
+    text-align: center;
+    color: #fff;
+    background: url('../img/my_bg.png') center/cover;
+
+    .my{
+        position: absolute;
+        top:.5rem;
+        left: 0;
+        right: 0;
+        margin: auto;
+        width: 1.6rem;
+        height: 1.6rem;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        &>img{
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
+    }
+
+}
+ul,
+li{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    box-sizing: border-box;
+}
+ul{
+    padding: 0 .3rem;
+    width: 100%;
+    height: auto;
+    li{
+        position: relative;
+        padding: 0 .12rem 0 .58rem;
+        width: 100%;
+        height: .9rem;
+        line-height: .9rem;
+        font-size: 28px;
+        text-align: left;
+        color: #000;
+        border-bottom: 1px solid #d8d8d8;
+
+        &:after{
+         position: absolute;
+         top:0;
+         bottom: 0;
+         right: 0;
+         margin: auto;
+         display: block;
+         content: "";
+         width: .3rem;
+         height: .3rem;   
+         background: transparent url('../img/next.png') center/cover;
+        }
+    }
+    li:first-child{
+        background: transparent url('../img/wallet_icon.png') left center/.38rem .34rem  no-repeat;
+    }
+    li:nth-child(2) {
+        background: transparent url('../img/my_icon_2.png') left center/.40rem .40rem  no-repeat;
+    }
+    li:last-child{
+        padding-left: .59rem;
+        background: transparent url('../img/my_icon_3.png') left center/.40rem .40rem  no-repeat;
+    }
+}
+.login-out {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: .3rem;
+    margin: auto;
+    width: 6rem;
+    height: .9rem;
+    line-height: .9rem;
+    font-size: 36px;
+    color: #e6281b;
+    border-radius: .45rem;
+    border: solid 1px #e6281b;
+  }
