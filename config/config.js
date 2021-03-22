@@ -23,6 +23,10 @@ module.exports = {
       page:'wash',
       title:'界上无人洗车',
     },
+    {
+      page:'instructions',
+      title:'洗车说明',
+    },
   ],
   cssPublicPath:'../',
   imgOutputPath:'img/',
