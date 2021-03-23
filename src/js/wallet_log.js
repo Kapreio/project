@@ -50,4 +50,4 @@ function splitLi(list){
   return html
 }
 log.innerHTML = splitLi(logData2)
-console.log(log)
+console.log(logData)
