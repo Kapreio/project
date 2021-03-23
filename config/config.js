@@ -35,6 +35,10 @@ module.exports = {
       page:'balance',
       title:'帐户余额',
     },
+    {
+      page:'wallet_log',
+      title:'交易记录',
+    },
   ],
   cssPublicPath:'../',
   imgOutputPath:'img/',
