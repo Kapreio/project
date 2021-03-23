@@ -39,6 +39,10 @@ module.exports = {
       page:'wallet_log',
       title:'交易记录',
     },
+    {
+      page:'tel_bind',
+      title:'关联手机号',
+    },
   ],
   cssPublicPath:'../',
   imgOutputPath:'img/',
