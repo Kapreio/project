@@ -1,9 +1,9 @@
-.input-nav{
+.input-nav {
     position: relative;
-    margin:.6rem auto .3rem;
+    margin: .6rem auto .3rem;
     padding: 0 0 0 .86rem;
     width: 6rem;
-    height: .9rem;    
+    height: .9rem;
     line-height: .9rem;
     border-radius: .45rem;
     border: solid 1px #000;
@@ -11,41 +11,40 @@
     font-size: .28rem;
     text-align: left;
     color: #000;
-    &[error=true]{
-        border-color:#e6281b; 
-
-        span.error-message{
+    &[error=true] {
+        border-color: #e6281b;
+        span.error-message {
             position: absolute;
-            top:0;
-            bottom:0;
+            top: 0;
+            bottom: 0;
             right: .4rem;
             width: auto;
             display: inline-block;
             font-size: .24rem;
             text-align: right;
-            color:#e6281b; 
+            color: #e6281b;
         }
     }
-    input{
+    input {
         width: 100%;
         height: .9rem;
         font-size: .28rem;
         border: none;
         box-shadow: none;
     }
-    input:focus{
+    input:focus {
         outline: none;
     }
-    &.tel{
+    &.tel {
         background: transparent url('../img/icon_phone.png') .4rem center/.36rem no-repeat;
     }
-    &.sms-code{
+    &.sms-code {
         padding-right: 2.76rem;
         background: transparent url('../img/icon_mess.png') .4rem center/.36rem no-repeat;
-        .get-code{
+        .get-code {
             position: absolute;
-            top:0;
-            bottom: 0;            
+            top: 0;
+            bottom: 0;
             right: 0;
             width: 2.76rem;
             height: .4rem;
@@ -54,13 +53,14 @@
             line-height: .36rem;
             border-left: 1px solid #000;
         }
-        &[countDown=true] .get-code{
+        &[countDown=true] .get-code {
             color: gray;
         }
     }
-  }
-  .login-btn {
-    margin:.6rem auto 0;
+}
+
+.login-btn {
+    margin: .6rem auto 0;
     width: 6rem;
     height: .9rem;
     opacity: 0.3;
@@ -70,21 +70,20 @@
     color: #ffffff;
     border-radius: .45rem;
     background-image: linear-gradient(to top, #e6281b, #f56853);
-
-    &[enable=true]{
+    &[enable=true] {
         opacity: 1;
     }
-  }
-  p.protocol {
+}
+
+p.protocol {
     position: absolute;
     bottom: .3rem;
     width: 100%;
     height: .33rem;
     font-size: .24rem;
     text-align: center;
-    
     color: #000000;
-    a{
+    a {
         color: #4a90e2;
     }
-  }
+}
