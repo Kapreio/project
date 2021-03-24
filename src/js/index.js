@@ -23,11 +23,10 @@ const locateBtn = document.getElementById('locateBtn')
 const scanBtn = document.getElementById('scanBtn')
 const bigMarkerOffset = new AMap.Pixel(-55,-120)
 let mapInst = new MapClass('mapContain',{})
+let geolocation = mapInst.initGeolocation()
 let popupNavDom
-let geolocation
 
 mapInst.addMarkers(markerList)
-geolocation = mapInst.initGeolocation()
 
 
 function confirmGoToHere(opts,coord){
