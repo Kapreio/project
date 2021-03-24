@@ -62,10 +62,16 @@ export default class MapClass{
     this.selectedIcon = this.createIcon(selectedIconOpts)
     return this.selectedIcon
   }
+  getSelectIcon () {
+    return this.selectedIcon || this.createSelectIcon()
+  }
   createOfflineSelectIcon () {
     let opt = Object.assign({},selectedIconOpts)
     this.offlineSelectedIcon = this.createIcon(Object.assign(opt,{image: 'img/marker_off.png'}))
     return this.offlineSelectedIcon
+  }
+  getOfflineSelectIcon () {
+    return this.offlineSelectedIcon || this.createOfflineSelectIcon()
   }
   createMarker (data) {
     let icon
