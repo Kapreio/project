@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=0.5,maximum-scale=0.5,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title><%= htmlWebpackPlugin.options.title%></title>
+    <title>
+        <%= htmlWebpackPlugin.options.title%>
+    </title>
     <script>
         // 计算html font-size
         // 保证7.5rem等于屏幕宽度
-        (function(f, j) {
+        (function (f, j) {
             var i = document,
                 d = window;
             var b = i.documentElement;
@@ -26,26 +29,30 @@
                 b.style.fontSize = (l > 100 ? 100 : l) + "px";
             }
             g();
-            d.addEventListener('resize',g)
-            d.addEventListener("pageshow", function(k) {
+            d.addEventListener('resize', g)
+            d.addEventListener("pageshow", function (k) {
                 if (k.persisted) {
                     clearTimeout(c);
                     c = setTimeout(g, 300)
                 }
             }, false)
-        })(750, 1080); 
+        })(750, 1080);
     </script>
 </head>
+
 <body>
     <div class="input-nav tel">
-        <input id="telInput" type="text"  placeholder="请输入您的手机号">
-        <span class="error-message">手机号位数错误！</span>  
+        <input id="telInput" type="text" placeholder="请输入您的手机号">
+        <span class="error-message">手机号位数错误！</span>
     </div>
     <div class="input-nav sms-code">
         <input id="codeInput" type="text" placeholder="请输入验证码">
         <div id="getCode" class="get-code">获取短信验证码</div>
     </div>
     <div id="loginBtn" class="login-btn">登陆</div>
-    <p class="protocol">登录即表示您阅读并同意<a href="protocol.html">《界上无人洗车免责条款》</a></p>
+    <p class="protocol">登录即表示您阅读并同意
+        <a href="protocol.html">《界上无人洗车免责条款》</a>
+    </p>
 </body>
+
 </html>

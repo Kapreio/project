@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=0.5,maximum-scale=0.5,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title><%= htmlWebpackPlugin.options.title%></title>>
+    <title>
+        <%= htmlWebpackPlugin.options.title%>
+    </title>>
     <script>
         // 计算html font-size
         // 保证7.5rem等于屏幕宽度
-        (function(f, j) {
+        (function (f, j) {
             var i = document,
                 d = window;
             var b = i.documentElement;
@@ -26,16 +29,17 @@
                 b.style.fontSize = (l > 100 ? 100 : l) + "px";
             }
             g();
-            d.addEventListener('resize',g)
-            d.addEventListener("pageshow", function(k) {
+            d.addEventListener('resize', g)
+            d.addEventListener("pageshow", function (k) {
                 if (k.persisted) {
                     clearTimeout(c);
                     c = setTimeout(g, 300)
                 }
             }, false)
-        })(750, 1080); 
+        })(750, 1080);
     </script>
 </head>
+
 <body>
     <div class="step-proccess">
         <span class="step">1</span>
@@ -43,9 +47,10 @@
         <span class="step">3</span>
     </div>
     <div class="first-step-content">
-       <h2 class="step-title">第1步：确认车辆停放到指定位置</h2>
-       <p>通过车辆后视镜及车前方观察， <br/>车头到达绿色区域，车身在黄线内。</p>
-       <div class="step-info"></div>
+        <h2 class="step-title">第1步：确认车辆停放到指定位置</h2>
+        <p>通过车辆后视镜及车前方观察，
+            <br/>车头到达绿色区域，车身在黄线内。</p>
+        <div class="step-info"></div>
     </div>
     <div class="second-step-content">
         <h2 class="step-title">第2步：确认完成以下操作</h2>
@@ -65,7 +70,10 @@
         <p>洗车费用</p>
         <ul id="chooices">
             <li class="balance-pay">
-                会员余额支付<span>账户余额：<span>100.00元</span></span>
+                会员余额支付
+                <span>账户余额：
+                    <span>100.00元</span>
+                </span>
             </li>
             <li class="wechat-pay">
                 微信支付
@@ -74,20 +82,23 @@
     </div>
     <div class="fourth-step-content">
         <p>洗车用时</p>
-        <p  id="tiemConsumed" class="time-consuming">02:45</p>
+        <p id="tiemConsumed" class="time-consuming">02:45</p>
         <p>洗车正在进行中，请耐心等待…</p>
         <div class="imgae_block"></div>
-        
+
         <div class="tips-area">
             <span class='tips-title'>温馨提示：</span>
-            <p>若洗车过程中发生任何意外，请拨打客服电话：<a href="tel:025-85411915">025-85411915</a></p>
+            <p>若洗车过程中发生任何意外，请拨打客服电话：
+                <a href="tel:025-85411915">025-85411915</a>
+            </p>
         </div>
         <div class="tips-model">
-            <p class="title">温馨提示</p>   
+            <p class="title">温馨提示</p>
             <p class="contant">洗车已结束，欢迎下次光临！</p>
             <a class="back-home" href="index.html">返回主页</a>
         </div>
     </div>
     <div id="nextStepBtn" class="next-step-btn"></div>
 </body>
+
 </html>

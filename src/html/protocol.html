@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=0.5,maximum-scale=0.5,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title><%= htmlWebpackPlugin.options.title%></title>
+    <title>
+        <%= htmlWebpackPlugin.options.title%>
+    </title>
     <style>
         #protocol {
             margin: .3rem auto;
@@ -17,7 +20,7 @@
     <script>
         // 计算html font-size
         // 保证7.5rem等于屏幕宽度
-        (function(f, j) {
+        (function (f, j) {
             var i = document,
                 d = window;
             var b = i.documentElement;
@@ -35,19 +38,21 @@
                 b.style.fontSize = (l > 100 ? 100 : l) + "px";
             }
             g();
-            d.addEventListener('resize',g)
-            d.addEventListener("pageshow", function(k) {
+            d.addEventListener('resize', g)
+            d.addEventListener("pageshow", function (k) {
                 if (k.persisted) {
                     clearTimeout(c);
                     c = setTimeout(g, 300)
                 }
             }, false)
-        })(750, 1080); 
+        })(750, 1080);
     </script>
 </head>
+
 <body>
     <div id="protocol">
 
     </div>
 </body>
+
 </html>

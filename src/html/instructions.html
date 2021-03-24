@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=0.5,maximum-scale=0.5,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title><%= htmlWebpackPlugin.options.title%></title>
+    <title>
+        <%= htmlWebpackPlugin.options.title%>
+    </title>
     <script>
         // 计算html font-size
         // 保证7.5rem等于屏幕宽度
-        (function(f, j) {
+        (function (f, j) {
             var i = document,
                 d = window;
             var b = i.documentElement;
@@ -26,36 +29,42 @@
                 b.style.fontSize = (l > 100 ? 100 : l) + "px";
             }
             g();
-            d.addEventListener('resize',g)
-            d.addEventListener("pageshow", function(k) {
+            d.addEventListener('resize', g)
+            d.addEventListener("pageshow", function (k) {
                 if (k.persisted) {
                     clearTimeout(c);
                     c = setTimeout(g, 300)
                 }
             }, false)
-        })(750, 1080); 
+        })(750, 1080);
     </script>
 </head>
+
 <body>
     <h3>7X24小时</h3>
     <h1>无人值守洗车</h1>
     <div class="imgae_block"></div>
     <div class="fearture">
         <ul>
-            <li><span class="big">快</span>3分钟极速洗车</li>
-            <li><span class="big">省</span>10元钱搞定</li>
-            <li><span class="big">美</span>洗后干净靓丽</li>
+            <li>
+                <span class="big">快</span>3分钟极速洗车</li>
+            <li>
+                <span class="big">省</span>10元钱搞定</li>
+            <li>
+                <span class="big">美</span>洗后干净靓丽</li>
         </ul>
     </div>
     <div class="step-wrapper">
         <h1>洗车使用说明</h1>
         <div class="first-step-content">
-            <h2 class="step-title"><span>1</span>确认车辆停放到指定位置</h2>
+            <h2 class="step-title">
+                <span>1</span>确认车辆停放到指定位置</h2>
             <p>通过车辆后视镜及车前方观察，车头到达绿色区域，车身 在黄线内。</p>
             <div class="step-info"></div>
         </div>
         <div class="second-step-content">
-            <h2 class="step-title"><span>2</span>确认完成以下操作</h2>
+            <h2 class="step-title">
+                <span>2</span>确认完成以下操作</h2>
             <ul>
                 <li>挂P档</li>
                 <li>拉手刹</li>
@@ -67,7 +76,8 @@
             </ul>
         </div>
         <div class="third-step-content">
-            <h2 class="step-title"><span>3</span>付费</h2>
+            <h2 class="step-title">
+                <span>3</span>付费</h2>
             <p>支持会员余额支付、微信支付</p>
         </div>
     </div>
@@ -81,6 +91,9 @@
         <p>请收好超长加装件，容易被洗坏或刮到洗车机。</p>
         </p>
     </div>
-    <div class="red-btn scan-now"><span>扫码洗车</span></div>
+    <div class="red-btn scan-now">
+        <span>扫码洗车</span>
+    </div>
 </body>
+
 </html>

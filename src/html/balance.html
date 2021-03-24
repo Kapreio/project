@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=0.5,maximum-scale=0.5,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title><%= htmlWebpackPlugin.options.title%></title>
+    <title>
+        <%= htmlWebpackPlugin.options.title%>
+    </title>
     <script>
         // 计算html font-size
         // 保证7.5rem等于屏幕宽度
-        (function(f, j) {
+        (function (f, j) {
             var i = document,
                 d = window;
             var b = i.documentElement;
@@ -26,27 +29,33 @@
                 b.style.fontSize = (l > 100 ? 100 : l) + "px";
             }
             g();
-            d.addEventListener('resize',g)
-            d.addEventListener("pageshow", function(k) {
+            d.addEventListener('resize', g)
+            d.addEventListener("pageshow", function (k) {
                 if (k.persisted) {
                     clearTimeout(c);
                     c = setTimeout(g, 300)
                 }
             }, false)
-        })(750, 1080); 
+        })(750, 1080);
     </script>
 </head>
+
 <body>
     <div class="balance-nav">
         <p>当前余额</p>
-        <p class="balance">￥<span>510.00</span></p>
+        <p class="balance">￥
+            <span>510.00</span>
+        </p>
         <a href="wallet_log.html" class="show-pay">查看充值记录</a>
     </div>
     <div class="charge-nav">
         充值金额（元）
         <input type="number" placeholder="请输入充值金额（10元起充）">
-        <span class="chargeed">充值后余额：¥<span>520.00</span></span>
-    </div>    
+        <span class="chargeed">充值后余额：¥
+            <span>520.00</span>
+        </span>
+    </div>
     <div class="charge-confirm">立即充值</div>
 </body>
+
 </html>
