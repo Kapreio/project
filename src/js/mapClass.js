@@ -4,7 +4,6 @@ import '../img/marker_big.png'
 const iconSize = new AMap.Size(64, 70)
 const iconSelectedSize = new AMap.Size(110, 120)
 const markerOffset = new AMap.Pixel(-32,-70)
-const bigMarkerOffset = new AMap.Pixel(-55,-120)
 const infoOffset = new AMap.Pixel(0,-125)
 const defaultIconOpts = {
   size: iconSize,
@@ -16,7 +15,10 @@ const selectedIconOpts = {
   image: 'img/marker.png',
   imageSize: iconSelectedSize,
 }
-function getInfoDom(opts) {
+function getNaviUrl(opts,c){
+  return `https://uri.amap.com/navigation?from=${c[0]},${c[1]},当前位置&to=${opts.position[0]},${opts.position[1]},${opts.title}&src=${location.href}&callnative=1`
+}
+function getInfoDom(opts,index) {
   return `
       <div class='popup-wrap ${opts.offline?'offline':''}'>
         <div class='title'>
@@ -24,7 +26,7 @@ function getInfoDom(opts) {
         </div>
         <p class="address">${opts.address}</p>
         <div class='opreationg-btns'>
-          <a href='navigation.html?id=${opts.id}'><span id='distance'>2.4km</span></a>
+          <div  id="navigationBtn" data-index="${index}"><span id='distance'>2.4km</span></div>
           <a  class="go-queue" href='queue.html?id=${opts.id}'><span>查看排队</span></a>
         </div>
       </div> 
@@ -42,6 +44,7 @@ export default class MapClass{
     })
     this.geolocation = null
     this.currentPosition = null
+    this.markerOffset = markerOffset
   }
   createIcon (opts = {}) {
     return new AMap.Icon(opts)
@@ -95,11 +98,11 @@ export default class MapClass{
     }
     return markers
   }  
-  createInform (opts) {
+  createInform (opts,index) {
     return new AMap.InfoWindow({
       isCustom: true,
       closeWhenClickMap: true,
-      content: getInfoDom(opts),
+      content: getInfoDom(opts,index),
       offset: infoOffset,
     })
   }
@@ -110,34 +113,6 @@ export default class MapClass{
     let markers =  Object.prototype.toString.call(list).slice(8,-1) === 'Array' ? this.createMarkers(list) : this.createMarker(list)
     this.markers.push(...markers)
     this.map.add(markers)
-    return this
-  }
-  addInfos () {
-    for (let marker of this.markers) {
-      if(!marker.info) {
-        marker.info = this.createInform(marker.data)
-        marker.info.on('close',()=>{
-          marker.data.offline ?  marker.setIcon(this.outIcon): marker.setIcon(this.icon)
-          marker.setOffset(markerOffset)
-        })
-      }
-      marker.off('click')
-      marker.on('click', () => {
-        marker.info.open(marker.getMap(), marker.getPosition())        
-        setTimeout(()=>{
-          let distanceDom = document.getElementById('distance')
-          if (this.currentPosition) {
-            distanceDom.innerHTML = this.getDistance(marker.getPosition())
-          }
-        })
-        if(marker.data.offline) {
-          this.offlineSelectedIcon ? marker.setIcon(this.offlineSelectedIcon) : marker.setIcon(this.createOfflineSelectIcon())
-        } else {
-          this.selectedIcon ? marker.setIcon(this.selectedIcon) : marker.setIcon(this.createSelectIcon())
-        }
-        marker.setOffset(bigMarkerOffset)
-      })
-    }
     return this
   }
   initGeolocation () {
@@ -157,5 +132,8 @@ export default class MapClass{
       })
     })
     return this.geolocation
+  }
+  goToHere (opts, currentPosition) {
+    location.href = getNaviUrl(opts, currentPosition)
   }
 }
