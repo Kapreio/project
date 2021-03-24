@@ -31,17 +31,16 @@ body[show-modal=show] {
         left: 0;
         background-color: rgba(0, 0, 0, 0.6);
     }
-    .modal[show="true"] {      
-        
-        top:50%;
-        transform: translate3d(0, -50%, 0); 
+    .modal[show="true"] {
+        top: 50%;
+        transform: translate3d(0, -50%, 0);
         animation: inAnimate 0.3s 1 ease;
     }
 }
 
 body[show-modal=hide] {
     .modal[show="false"] {
-        top:100%;
+        top: 100%;
         transform: translate3d(0, 100%, 0);
         animation: outAnimate 0.8s 1 ease;
     }
