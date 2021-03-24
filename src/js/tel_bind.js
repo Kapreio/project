@@ -1,10 +1,12 @@
 import '../css/common.css'
 import '../css/tel_bind.less'
+import '../common/inAnimate.less'
 const list = document.getElementById('list')
 const addBind = document.getElementById('addBind')
 const cancle = document.getElementById('cancle')
 const confirmBind = document.getElementById('confirmBind')
 const body = document.body
+const telModal = document.getElementById('telModal')
 const tleList = [
   {
     id:'1',
@@ -35,10 +37,12 @@ list.addEventListener('click',function(event){
   }
 })
 addBind.addEventListener('click',function(){
-  body.setAttribute('tel-bind','true')
+  body.setAttribute('show-modal','show')
+  telModal.setAttribute('show','true')
 })
 cancle.addEventListener('click',function(){
-  body.setAttribute('tel-bind','false')
+  body.setAttribute('show-modal','hide')
+  telModal.setAttribute('show','false')
 })
 confirmBind.addEventListener('click',function(){
   console.log('addddd')

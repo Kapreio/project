@@ -1,0 +1,48 @@
+@keyframes outAnimate {
+    0% {
+        top: 50%;
+        -webkit-transform: translate3d(0, -50%, 0);
+    }
+    100% {
+        top: 100%;
+        -webkit-transform: translate3d(0, 100%, 0);
+        opacity: 0;
+    }
+}
+
+@keyframes inAnimate {
+    0% {
+        top: -150%;
+        transform: translate3d(0, -100%, 0);
+    }
+    100% {
+        top: 50%;
+        transform: translate3d(0, -50%, 0);
+    }
+}
+
+body[show-modal=show] {
+    &:after {
+        position: absolute;
+        content: "";
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+    .modal[show="true"] {      
+        
+        top:50%;
+        transform: translate3d(0, -50%, 0); 
+        animation: inAnimate 0.3s 1 ease;
+    }
+}
+
+body[show-modal=hide] {
+    .modal[show="false"] {
+        top:100%;
+        transform: translate3d(0, 100%, 0);
+        animation: outAnimate 0.8s 1 ease;
+    }
+}
