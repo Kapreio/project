@@ -1,46 +1,72 @@
 import '../css/common.css'
 import '../css/wash.less'
-import { setInterval } from 'core-js'
+// body Dom用于步骤UI
 const bodyDom = document.body
-const  nextStepBtn = document.getElementById('nextStepBtn')
+// 下一步按错
+const nextStepBtn = document.getElementById('nextStepBtn')
+// 步骤对应字段列表，用于UI控制
 const stepStr = ['first','second','third','fourth','fifth']
+// 支付方式列表DOM
 const chooicesList = document.getElementById('chooices').children
+// 显示用时DOM
 const tiemConsumedDom = document.getElementById('tiemConsumed')
+// 记录当前步骤
 let stepIndex = 0
+// 保存选中的支付方式
 let payChoosed = chooicesList[0]
+// 用时更新定时器保存变量
 let timeConsumedInter 
+// 记录总用时，单位S
 let timeConsumed = 3600
+// 设置默认支付方式选中
 payChoosed.setAttribute('choosed','true')
-
+// 显示第一步UI
 bodyDom.setAttribute('step',stepStr[stepIndex])
+// 更新当前步骤
 stepIndex++
-
+// 设置下一步按钮可用
 nextStepBtn.setAttribute('enable','true')
 
+// 下一步
 nextStepBtn.addEventListener('click',function(){
+  if(this.getAttribute('enable')!=='true') return false
+  bodyDom.setAttribute('step',stepStr[stepIndex++])
+  if(stepIndex===3){
+    // 第四步开始计算耗时
+    beginTime()
+  }
+})
+// 耗时计算
+function beginTime () {
   let hour
   let minute
   let second
-  if(this.getAttribute('enable')!=='true') return false
-  bodyDom.setAttribute('step',stepStr[stepIndex++])
-  if(stepIndex==3){
-    timeConsumedInter = setInterval(()=>{
-      timeConsumed++
-      hour = parseInt(timeConsumed/3600)      
-      minute = parseInt(timeConsumed%3600/60)
-      second =timeConsumed%3600%60
-      hour > 0?(hour=hour+':'):(hour='')
-      minute < 10?(minute = '0'+minute):''
-      second < 10?(second = '0'+second):''
-      tiemConsumedDom.innerHTML = `${hour}${minute}:${second}`
-      if(timeConsumed>=3665){
-        clearInterval(timeConsumedInter)
-        bodyDom.setAttribute('step',stepStr[stepIndex++])
-      }
-    },1000)
-  }
-})
-
+  // 使用inter每秒更新一次耗时
+  timeConsumedInter = setInterval(()=>{
+    // 更新耗时
+    timeConsumed++
+    // 计算花费小时
+    hour = parseInt(timeConsumed/3600)      
+    // 计算花费分钟
+    minute = parseInt(timeConsumed%3600/60)
+    // 计算花费秒
+    second =timeConsumed%3600%60
+    // hour为零时，hour字段为空
+    hour > 0?(hour=hour+':'):(hour='')
+    // 分钟小于10于，前面补零
+    minute < 10?(minute = '0'+minute):''
+    // 秒小于10于，前面补零
+    second < 10?(second = '0'+second):''
+    // 拼接耗时字串
+    tiemConsumedDom.innerHTML = `${hour}${minute}:${second}`
+    // 完成清除计时器
+    if(timeConsumed>=3665){
+      clearInterval(timeConsumedInter)
+      bodyDom.setAttribute('step',stepStr[stepIndex++])
+    }
+  },1000)
+}
+// 给支付选项设置选中功能
 for(let li of chooicesList) {
   li.addEventListener('click',function(){
     if(this.getAttribute('choosed') !== 'true') {

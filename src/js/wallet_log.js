@@ -1,6 +1,8 @@
 import '../css/common.css'
 import '../css/wallet_log.less'
+// 显示记录DOM
 const log = document.getElementById('log')
+// 记录数据
 const logData = [
   {
     log:'账户充值',
@@ -15,6 +17,7 @@ const logData = [
     change:'+200元',
   },
 ]
+// 记录数据
 const logData2 = [
   {
     log:'洗车',
@@ -35,6 +38,7 @@ const logData2 = [
     change:'-100元',
   },
 ]
+// 拼装记录DOM
 function splitLi(list){
   let html=''
   for(let li of list){
@@ -49,5 +53,6 @@ function splitLi(list){
   }
   return html
 }
+// 更新记录
 log.innerHTML = splitLi(logData2)
 console.log(logData)
