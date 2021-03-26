@@ -1,5 +1,6 @@
 import '../css/common.css'
 import '../css/wallet_log.less'
+import qs from './common/qs'
 // 显示记录DOM
 const log = document.getElementById('log')
 const body = document.body
@@ -140,3 +141,4 @@ body.addEventListener('scroll',function(){
     return false
   }
 })
+console.log(qs.urlParse())
