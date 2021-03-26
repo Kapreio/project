@@ -28,5 +28,8 @@
     "webpack-cli": "^3.0.3",
     "webpack-dev-server": "^2.7.1",
     "webpack-merge": "^4.1.0"
+  },
+  "dependencies": {
+    "qs": "^6.5.2"
   }
 }
