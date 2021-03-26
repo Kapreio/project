@@ -1,6 +1,6 @@
 import '../css/common.css'
 import '../css/index.less'
-import MapClass from './mapClass.js' // 导入map相关操作的封装类引入
+import MapClass from './common/mapClass.js' // 导入map相关操作的封装类引入
 import sendMessage from '../common/sendMessage/message' // 引入通知小组件
 // marker点数据，后期使用请求获取
 const markerList = [

@@ -1,6 +1,6 @@
 import '../css/common.css'
 import '../css/navigation.less'
-import MapClass from './mapClass.js'
+import MapClass from './common/mapClass.js'
 import sendMessage from '../common/sendMessage/message'
 // 门店数据
 const data={

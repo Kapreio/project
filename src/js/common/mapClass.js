@@ -4,9 +4,9 @@
  * 引用之前必须保证已经在html页面中引用高德js-api
  */
 
-import '../img/marker.png'
-import '../img/marker_off.png'
-import '../img/marker_big.png'
+import '../../img/marker.png'
+import '../../img/marker_off.png'
+import '../../img/marker_big.png'
 // 定义icon大小 
 const iconSize = new AMap.Size(64, 70)
 // 定义选中icon大小
