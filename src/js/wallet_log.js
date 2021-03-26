@@ -107,7 +107,7 @@ function loadEable(){
   // 已经是最后一页，返回false
   if (body.getAttribute('loaded') === 'true') return false
   // 未滚动到底部，返回false
-  if (body.offsetHeight <= body.scrollHeight - loadDistance) 
+  if (body.offsetHeight + body.scrollTop <= body.scrollHeight - loadDistance) 
     return false
   // 否则，返回true
   return true
@@ -115,6 +115,7 @@ function loadEable(){
 // 滚动分页加载
 body.addEventListener('scroll',function(){
   // 判断是否分页加载
+  console.log(body.offsetHeight )
   if (loadEable()) {
     console.log('要分页加载了')
     // 标记加载中
