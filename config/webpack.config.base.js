@@ -16,11 +16,11 @@ config.HTMLDirs.forEach(({page,title='界上无人洗车'}) => {
     template: path.resolve(__dirname, `../src/html/${page}.html`),
     //生成html的title
     title,
-    minify:{
-      collapseInlineTagWhitespace:true,
-      collapseWhitespace:true,
-      minifyJS:true,
-      minifyCSS:true
+    minify: {
+      collapseInlineTagWhitespace: true,
+      collapseWhitespace: true,
+      minifyJS: true,
+      minifyCSS: true,
     },
     //生成的favicon.ico
     //给生成的 js 文件一个独特的 hash 值,是文件名后带？的那个hash,output中的[chunkhash]是文件名中带hash
