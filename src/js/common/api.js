@@ -40,3 +40,11 @@ export function getSiteInfo (params) {
     data: params,
   })
 }
+
+export function getUseInfo (params) {
+  return axiosCreation({
+    url: '/wx/user/info',
+    method: 'POST',
+    data: params,
+  })
+}
