@@ -6,18 +6,21 @@ import sendMessage from '../common/sendMessage/message' // 引入通知小组件
 const markerList = [
   {
     id:'1',
-    position:[118.775961,31.997375],
-    title:'南山路洗车店',
+    longitude:118.775961,
+    latitude:31.997375,
+    name:'南山路洗车店',
     address:'南京市雨花台区雨花南路520号-文字扩充文字扩充文字扩充文字扩充文字扩充文字扩充',
   },
   {
-    position:[118.797075,31.98995],
-    title:'网点2',
-    offline:true,
+    longitude:118.797075,
+    latitude:31.98995,
+    name:'网点2',
+    status:0,
   },
   {
-    position:[118.7939,32.012441],
-    title:'网点3',
+    longitude:118.7939,
+    latitude:32.012441,
+    name:'网点3',
   },
 ]
 // 定位按钮
@@ -78,7 +81,7 @@ for (let [index,marker] of mapInst.markers.entries()) {
     marker.info = mapInst.createInform(marker.data,index)
     marker.info.on('close',()=>{
       // 信息窗体关闭，恢复marker原始大小和位移
-      marker.data.offline ?  marker.setIcon(mapInst.outIcon) : marker.setIcon(mapInst.icon)
+      marker.data.status === 0 ?  marker.setIcon(mapInst.outIcon) : marker.setIcon(mapInst.icon)
       marker.setOffset(mapInst.markerOffset)
     })
   }
@@ -108,7 +111,7 @@ for (let [index,marker] of mapInst.markers.entries()) {
     })
 
     // 根据是否营业，添加不同的选中icon
-    marker.data.offline 
+    marker.data.status === 0 
       ? marker.setIcon(mapInst.getOfflineSelectIcon()) 
       : marker.setIcon(mapInst.getSelectIcon())
     // 设置选中位移
