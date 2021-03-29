@@ -3,7 +3,7 @@ import qs from 'qs'
 
 const baseURL = process.env.NODE_ENV === 'production'
   ? 'http://192.168.200.184:8380' // 生产
-  : 'http://rap2api.taobao.org/app/mock/17400' // 开发
+  : 'http://rap2api.taobao.org/app/mock/17400/' // 开发
 
 let axiosIns = axios.create({
   baseURL,
@@ -29,15 +29,13 @@ function axiosCreation ({method = 'GET'} = {}, enableQs = true) {
   let arg = arguments[0]
   let opts = Object.assign({method}, arg)
   opts.method === 'GET' && !opts.params && (opts.params = opts.data)
-  opts.data.token && (opts.auth = {
+  opts.data && opts.data.token && (opts.auth = {
     username: 'janedoe',
     password: 's00pers3cret',
   })
 
-  console.log(opts.data, opts.data.tokens)
   enableQs && opts.method !== 'GET' && opts.data && (opts.data = qs.stringify(opts.data))
-
-  console.log(opts)
+  
   return axiosIns(opts)
 }
 
