@@ -54,3 +54,11 @@ export function getUseInfo (params) {
     data: params,
   })
 }
+
+export function getBalance (params) {
+  return axiosCreation({
+    url: '/wx/user/balance',
+    method: 'POST',
+    data: params,
+  })
+}
