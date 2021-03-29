@@ -44,18 +44,18 @@
     <div class="balance-nav">
         <p>当前余额</p>
         <p class="balance">￥
-            <span>510.00</span>
+            <span id="balance">510.00</span>
         </p>
-        <a href="wallet_log.html" class="show-pay">查看充值记录</a>
+        <a id="chargeLog" href="wallet_log.html" class="show-pay">查看充值记录</a>
     </div>
     <div class="charge-nav">
         充值金额（元）
-        <input type="number" placeholder="请输入充值金额（10元起充）">
-        <span class="chargeed">充值后余额：¥
-            <span>520.00</span>
+        <input id="chargeInput" type="number" placeholder="请输入充值金额（10元起充）">
+        <span id="chargeAfter" class="chargeed">充值后余额：¥
+            <span id="afterBalance">520.00</span>
         </span>
     </div>
-    <div class="charge-confirm">立即充值</div>
+    <div id="chargeNow" class="charge-confirm">立即充值</div>
 </body>
 
 </html>
