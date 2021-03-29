@@ -8,7 +8,7 @@ const baseURL = process.env.NODE_ENV === 'production'
 let axiosIns = axios.create({
   baseURL,
   timeout: 15000,
-  hearder:{'Content-type':'application/json'},
+  headers: {'Content-Type':'application/json; charset=utf-8'},
 })
 axiosIns.interceptors.request.use(config => {
   return config
@@ -29,7 +29,15 @@ function axiosCreation ({method = 'GET'} = {}, enableQs = true) {
   let arg = arguments[0]
   let opts = Object.assign({method}, arg)
   opts.method === 'GET' && !opts.params && (opts.params = opts.data)
+  opts.data.token && (opts.auth = {
+    username: 'janedoe',
+    password: 's00pers3cret',
+  })
+
+  console.log(opts.data, opts.data.tokens)
   enableQs && opts.method !== 'GET' && opts.data && (opts.data = qs.stringify(opts.data))
+
+  console.log(opts)
   return axiosIns(opts)
 }
 

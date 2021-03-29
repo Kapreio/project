@@ -8,7 +8,7 @@ const telNum = document.getElementById('telNum')
 const toBalance = document.getElementById('toBalance')
 const toWalletLog= document.getElementById('toWalletLog')
 const toTelBind= document.getElementById('toTelBind')
-getUseInfo()
+getUseInfo({token:'sss'})
   .then(data=>{
     let queryStr = qs.stringify({id:data.id})
     telNum.innerHTML = data.tel
