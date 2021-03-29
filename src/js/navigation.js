@@ -2,12 +2,9 @@ import '../css/common.css'
 import '../css/navigation.less'
 import MapClass from './common/mapClass.js'
 import sendMessage from '../common/sendMessage/message'
-// 门店数据
-const data={
-  position:[118.775961,31.997375],
-  title:'南山路洗车店',
-  address:'南京市雨花台区雨花南路520号-文字扩充文字扩充文字扩充文字扩充文字扩充文字扩充',   
-}
+import qs from './common/qs'
+import {getSiteInfo} from './common/api'
+let query = qs.urlParse()
 // 显示店铺名称DOM
 const titleDom = document.getElementById('title')
 // 店铺地址DOM
@@ -15,16 +12,28 @@ const addressDom = document.getElementById('address')
 // 立即定位按钮
 const navigationBtn = document.getElementById('navigationBtn')
 // 地图实例
-let mapInst = new MapClass('mapContainer',{center:data.position})
+let mapInst
 // 地图定位插件实例
-let geolocation = mapInst.initGeolocation()
+let geolocation 
+// 保存门店数据
+let markerData
 
-// 添加店铺marker到地图
-mapInst.map.add(mapInst.createMarker(data))
-// 设置店铺名称
-titleDom.innerHTML = data.title
-// 设置店铺地址
-addressDom.innerHTML = data.address
+getSiteInfo(qs.urlParse())
+  .then(data=>{
+    mapInst = new MapClass('mapContainer',{center:[data.longitude,data.latitude]})
+    // 添加店铺marker到地图
+    markerData = data
+    mapInst.map.add(mapInst.createMarker(data))
+    geolocation = mapInst.initGeolocation()
+    // 设置店铺名称
+    titleDom.innerHTML = data.name
+    // 设置店铺地址
+    addressDom.innerHTML = data.address
+    // 导航按钮绑定事件
+    navigationBtn.addEventListener('click', navigationBtnClick)
+    console.log(data)
+  })
+
 
 /**
  * 定位成功后确认是否跳转至导航
@@ -40,18 +49,18 @@ function confirmGoToHere(opts,coord){
 function navigationBtnClick () {
   if (mapInst.currentPosition) {  
     // 如果已获取当前位置，直接确认是否跳转至导航  
-    confirmGoToHere(data,mapInst.currentPosition)
+    confirmGoToHere(markerData,mapInst.currentPosition)
   } else {
     // 否则，先获取位置，再确认
     sendMessage({msg:'路线规划中，请稍等....'})
     geolocation.getCurrentPosition(function(status,{position}){
       if (position && status) {
-        confirmGoToHere(data,[position.lng,position.lat])
+        confirmGoToHere(markerData,[position.lng,position.lat])
       } else {
         sendMessage({msg:'定位失败，请稍后重试...'})
       }
     })
   }
 }
-// 导航按钮绑定事件
-navigationBtn.addEventListener('click', navigationBtnClick)
+
+

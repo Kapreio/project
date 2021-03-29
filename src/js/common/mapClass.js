@@ -33,7 +33,7 @@ const selectedIconOpts = {
  * @param coord  Array  当前位置坐标
  */
 function getNaviUrl(opts,c){
-  return `https://uri.amap.com/navigation?from=${c[0]},${c[1]},当前位置&to=${opts.position[0]},${opts.position[1]},${opts.title}&src=${location.href}&callnative=1`
+  return `https://uri.amap.com/navigation?from=${c[0]},${c[1]},当前位置&to=${opts.longitude},${opts.latitude},${opts.title}&src=${location.href}&callnative=1`
 }
 // 返回popup信息窗体DOM
 function getInfoDom(opts,index) {
@@ -121,7 +121,7 @@ export default class MapClass{
     data.offline && (icon = this.outIcon || this.createOfflineIcon())
     // 创建marker
     marker = new AMap.Marker({
-      position: new AMap.LngLat(...data.position), // marker坐标
+      position: new AMap.LngLat(data.longitude,data.latitude), // marker坐标
       icon, // marker使用的icon 
       offset:data.offset || markerOffset, // 设置偏移
       title:data.title || null, // 设置marker的title
