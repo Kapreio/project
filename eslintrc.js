@@ -7,6 +7,7 @@ module.exports = {
   },  
   globals: {
     AMap: true,
+    wx: true,
   },
   extends: 'eslint:recommended',
   parserOptions: {

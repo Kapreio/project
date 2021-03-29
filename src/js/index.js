@@ -139,3 +139,4 @@ scanBtn.addEventListener('click',function(){
 
 // 暴露出地图实例，用于调试
 window.mapInst = mapInst
+console.log(wx)
