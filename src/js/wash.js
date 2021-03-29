@@ -1,5 +1,7 @@
 import '../css/common.css'
 import '../css/wash.less'
+import {getBalance} from './common/api'
+const price = 10.00
 // body Dom用于步骤UI
 const bodyDom = document.body
 // 下一步按错
@@ -10,6 +12,9 @@ const stepStr = ['first','second','third','fourth','fifth']
 const chooicesList = document.getElementById('chooices').children
 // 显示用时DOM
 const tiemConsumedDom = document.getElementById('tiemConsumed')
+const washPrice = document.getElementById('washPrice')
+const balance = document.getElementById('balance')
+const balancePay = document.getElementById('balancePay')
 // 记录当前步骤
 let stepIndex = 0
 // 保存选中的支付方式
@@ -18,6 +23,7 @@ let payChoosed = chooicesList[0]
 let timeConsumedInter 
 // 记录总用时，单位S
 let timeConsumed = 3600
+washPrice.innerHTML = price.toFixed(2)
 // 设置默认支付方式选中
 payChoosed.setAttribute('choosed','true')
 // 显示第一步UI
@@ -31,6 +37,7 @@ nextStepBtn.setAttribute('enable','true')
 nextStepBtn.addEventListener('click',function(){
   if(this.getAttribute('enable')!=='true') return false
   bodyDom.setAttribute('step',stepStr[stepIndex++])
+  stepIndex === 2 && thirdOperation()
   if(stepIndex===3){
     // 第四步开始计算耗时
     beginTime()
@@ -65,6 +72,15 @@ function beginTime () {
       bodyDom.setAttribute('step',stepStr[stepIndex++])
     }
   },1000)
+}
+function thirdOperation() {
+  getBalance()
+    .then(data=>{
+      balance.innerHTML = data.toFixed(2)
+      if(data<price) {
+        balancePay.setAttribute('insufficient','true')
+      }
+    })
 }
 // 给支付选项设置选中功能
 for(let li of chooicesList) {
