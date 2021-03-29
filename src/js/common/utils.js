@@ -49,4 +49,13 @@ function setCookie(c_name, value, expiredays) {
     document.cookie = `${c_name}=${escape(value) + (expiredays == null ? '' : ';expires=' + exdate.toGMTString())}`
   }			
 }
-export {getCookie,setCookie}
+function is_weixin(){  
+  var ua = navigator.userAgent.toLowerCase()  
+  // /i忽略大小写  
+  if(ua.match(/MicroMessenger/i) == 'micromessenger'){  
+    return true  
+  }  
+
+  return false  
+}
+export {getCookie,setCookie,is_weixin}
