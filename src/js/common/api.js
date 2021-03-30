@@ -34,7 +34,7 @@ function axiosCreation ({method = 'GET'} = {}, enableQs = true) {
     password: 's00pers3cret',
   })
 
-  enableQs && opts.method !== 'GET' && opts.data && (opts.data = qs.stringify(opts.data))
+  // enableQs && opts.method !== 'GET' && opts.data && (opts.data = qs.stringify(opts.data))
   
   return axiosIns(opts)
 }
