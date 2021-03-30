@@ -94,3 +94,10 @@ export function relevanceCancel (params) {
     data: params,
   })
 }
+export function smsPost (params) {
+  return axiosCreation({
+    url: '/sms/post',
+    method: 'POST',
+    data: params,
+  })
+}
