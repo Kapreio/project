@@ -63,9 +63,9 @@ export function getBalance (params) {
   })
 }
 
-export function getRecord (params,charge) {
+export function getRecord (params,cost) {
   return axiosCreation({
-    url: `/wx/user/${charge ? 'chargemoney':'consume'}_record`,
+    url: `/wx/user/${cost ? 'consume': 'chargemoney'}_record`,
     method: 'POST',
     data: params,
   })
