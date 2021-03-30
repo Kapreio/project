@@ -62,3 +62,35 @@ export function getBalance (params) {
     data: params,
   })
 }
+
+export function getRecord (params,charge) {
+  return axiosCreation({
+    url: `/wx/user/${charge ? 'chargemoney':'consume'}_record`,
+    method: 'POST',
+    data: params,
+  })
+}
+
+export function getRelevanceList (params) {
+  return axiosCreation({
+    url: '/wx/user/relevance_list',
+    method: 'POST',
+    data: params,
+  })
+}
+
+export function relevanceAdd (params) {
+  return axiosCreation({
+    url: '/wx/user/relevance_add',
+    method: 'POST',
+    data: params,
+  })
+}
+
+export function relevanceCancel (params) {
+  return axiosCreation({
+    url: '/wx/user/relevance_cancel',
+    method: 'POST',
+    data: params,
+  })
+}
