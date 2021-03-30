@@ -3,6 +3,7 @@ import '../css/mine.less'
 import '../img/my_img.png'
 import {getUseInfo} from './common/api'
 import qs from './common/qs'
+import '../common/loginValidate/loginValidate'
 
 const telNum = document.getElementById('telNum')
 const toBalance = document.getElementById('toBalance')
