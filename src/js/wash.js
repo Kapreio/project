@@ -1,6 +1,7 @@
 import '../css/common.css'
 import '../css/wash.less'
 import {getBalance} from './common/api'
+import '../common/loginValidate/loginValidate'
 const price = 10.00
 // body Dom用于步骤UI
 const bodyDom = document.body

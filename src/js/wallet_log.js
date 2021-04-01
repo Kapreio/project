@@ -3,6 +3,7 @@ import '../css/wallet_log.less'
 import qs from './common/qs'
 import moment from 'moment'
 import {getRecord} from './common/api'
+import '../common/loginValidate/loginValidate'
 // 显示记录DOM
 const log = document.getElementById('log')
 const body = document.body

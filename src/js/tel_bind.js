@@ -3,6 +3,7 @@ import '../css/tel_bind.less'
 import '../common/inAnimate.less'
 import sendMessage from '../common/sendMessage/message' // 引入通知小组件
 import {getRelevanceList,relevanceAdd,relevanceCancel} from './common/api'
+import '../common/loginValidate/loginValidate'
 // 电话列表DOM
 const list = document.getElementById('list')
 // 添加绑定按钮

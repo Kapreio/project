@@ -3,6 +3,8 @@ import '../css/balance.less'
 import sendMessage from '../common/sendMessage/message'
 import qs from './common/qs'
 import {getBalance} from './common/api'
+import '../common/loginValidate/loginValidate'
+
 
 const balance = document.getElementById('balance')
 const chargeLog = document.getElementById('chargeLog')
