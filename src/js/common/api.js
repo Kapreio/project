@@ -2,8 +2,8 @@ import axios from 'axios'
 import qs from 'qs'
 
 const baseURL = process.env.NODE_ENV === 'production'
-  ? 'http://192.168.200.184:8380' // 生产
-  : 'http://rap2api.taobao.org/app/mock/17400/' // 开发
+  ? 'http://localhost:8080/' // 生产
+  : '/apis' // 开发
 
 let axiosIns = axios.create({
   baseURL,

@@ -12,6 +12,15 @@ module.exports = webpackMerge(webpackBase, {
     contentBase: config.devServerOutputPath,
     // 错误、警告展示设置
     overlay: {errors: true, warnings: true},
+    proxy: {
+      '/apis': { // 将www.exaple.com印射为/apis
+        target: 'http://carwash1.eveabc.com/', // 接口域名
+        changeOrigin: true, // 是否跨域
+        pathRewrite: {
+          '^/apis': '', // 需要rewrite的,
+        },
+      },
+    },
   },
 })
 
