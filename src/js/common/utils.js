@@ -10,7 +10,7 @@ function getCookie(c_name) {
       return ''
     } else {
       let cookieVal = JSON.parse(localStorage[c_name])
-      if (new Date(c_name.date) > new Date()) {
+      if (new Date(cookieVal.date) > new Date()) {
         return cookieVal.val
       } else {
         return ''
@@ -40,7 +40,7 @@ function getCookie(c_name) {
  */
 function setCookie(c_name, value, expiredays) {
   var exdate = new Date()
-  exdate.setDate(exdate.getDate() + (expiredays ? expiredays : 100000))
+  exdate.setDate(exdate.getDate() + (expiredays ? expiredays : 365*10))
   if (localStorage) {
     //如果支持localstorage,则使用localstorage保存数据
     localStorage[c_name] = JSON.stringify({ val: value, date: exdate })
