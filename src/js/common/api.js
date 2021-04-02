@@ -101,3 +101,12 @@ export function smsPost (params) {
     data: params,
   })
 }
+
+export function getWxJsSign (params) {
+  return axiosCreation({
+    url: '/wx/jssign',
+    method: 'POST',
+    data: params,
+  })
+}
+

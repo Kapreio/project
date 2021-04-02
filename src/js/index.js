@@ -2,6 +2,7 @@ import '../css/common.css'
 import '../css/index.less'
 import MapClass from './common/mapClass.js' // 导入map相关操作的封装类引入
 import sendMessage from '../common/sendMessage/message' // 引入通知小组件
+import {bindScan} from './common/scan'
 // marker点数据，后期使用请求获取
 const markerList = [
   {
@@ -135,11 +136,8 @@ locateBtn.addEventListener('click',function(){
   }
 })
 
-// 扫码按钮事件
-scanBtn.addEventListener('click',function(){
-  location.href = 'wash.html'
-})
-
 // 暴露出地图实例，用于调试
 window.mapInst = mapInst
-console.log(wx)
+
+bindScan(scanBtn)
+// console.log(wx)
