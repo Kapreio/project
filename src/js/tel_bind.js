@@ -56,24 +56,30 @@ addBind.addEventListener('click',function(){
   telModal.setAttribute('show','true')
 })
 // 隐藏添加电话绑定弹窗
-cancle.addEventListener('click',function(){
+cancle.addEventListener('click',hideModal)
+function hideModal(){
   body.setAttribute('show-modal','hide')
   telModal.setAttribute('show','false')
-})
+}
 // 确认添加电话绑定
 confirmBind.addEventListener('click',function(){
-  if (!/^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/.test(tel.value.trim())) {
+  if (body.getAttribute('tel_binding') === 'true') return false
+  if (!/^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9])|(17[\d]))\d{8}$/.test(tel.value.trim())) {
     sendMessage({msg:'请输入正确的电话号码...'})
     tel.focus()
   } else {
+    body.setAttribute('tel_binding','true')
     relevanceAdd({name:tel.value.trim()})
       .then(()=>{
         sendMessage({msg:'添加成功'})
-        body.setAttribute('tel-bind','false')
+        body.setAttribute('tel_binding','false') 
+        tel.value = ''     
+        hideModal()
         updateTelList()
       })
       .catch(err=>{
         sendMessage({msg:err})
+        body.setAttribute('tel_binding','false') 
       })
   }
   
