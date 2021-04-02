@@ -10,6 +10,7 @@ module.exports = webpackMerge(webpackBase, {
   devServer: {
     // 项目根目录
     contentBase: config.devServerOutputPath,
+    disableHostCheck:true,
     // 错误、警告展示设置
     overlay: {errors: true, warnings: true},
     proxy: {
