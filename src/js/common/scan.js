@@ -1,26 +1,21 @@
 import {getWxJsSign} from './api'
 
-function scanCode() {  
+function scanCode(callback) {  
   wx.scanQRCode({  
     needResult : 1,  
     scanType : [ 'qrCode', 'barCode' ],  
     success : function(res) {  
-      console.log(res)  
-      alert(JSON.stringify(res))  
-      var result = res.resultStr  
-      console.log(result)
+      callback('success',res.resultStr)
     },  
     fail : function(res) {  
-      console.log(res)  
-      alert(JSON.stringify(res))  
-
+      callback('fail',res)
     },
   })  
 } 
-export function bindScan (element) {
+export function bindScan (element,callback) {
   getWxJsSign({url:location.href.split('#')[0]})
     .then(data=>{
       wx.config(Object.assign({debug:true,jsApiList:['scanQRCode']},data))
-      element.addEventListener('click',scanCode)
+      element.addEventListener('click',()=>{scanCode(callback)})
     })
 }

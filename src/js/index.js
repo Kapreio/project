@@ -139,5 +139,11 @@ locateBtn.addEventListener('click',function(){
 // 暴露出地图实例，用于调试
 window.mapInst = mapInst
 
-bindScan(scanBtn)
+bindScan(scanBtn,function(status,resultStr){
+  if (status==='success'){
+    alert(`success!\n Result:${resultStr}`)
+  } else {
+    alert('fail')
+  }
+})
 // console.log(wx)
