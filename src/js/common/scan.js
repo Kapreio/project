@@ -5,17 +5,17 @@ function scanCode(callback) {
     needResult : 1,  
     scanType : [ 'qrCode', 'barCode' ],  
     success : function(res) {  
-      callback('success',res.resultStr)
+      alert(`success!\n Result:${res.resultStr}`)
     },  
     fail : function(res) {  
-      callback('fail',res)
+      alert('fail' + JSON.stringify(res))
     },
   })  
 } 
-export function bindScan (element,callback) {
+export function bindScan (element) {
   getWxJsSign({url:location.href.split('#')[0]})
     .then(data=>{
       wx.config(Object.assign({debug:true,jsApiList:['scanQRCode']},data))
-      element.addEventListener('click',()=>{scanCode(callback)})
+      element.addEventListener('click',scanCode)
     })
 }
