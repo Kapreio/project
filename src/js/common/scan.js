@@ -8,6 +8,7 @@ function scanCode() {
       console.log(res)  
       alert(JSON.stringify(res))  
       var result = res.resultStr  
+      console.log(result)
     },  
     fail : function(res) {  
       console.log(res)  
@@ -17,9 +18,9 @@ function scanCode() {
   })  
 } 
 export function bindScan (element) {
-  getWxJsSign({url:'carwash1.eveabc.com'})
+  getWxJsSign({url:location.href.split('#')[0]})
     .then(data=>{
-      wx.config(Object.assign({debug : true,jsApiList:['scanQRCode']},data))
+      wx.config(Object.assign({debug:true,jsApiList:['scanQRCode']},data))
       element.addEventListener('click',scanCode)
     })
 }
