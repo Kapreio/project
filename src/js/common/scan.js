@@ -1,6 +1,6 @@
 import {getWxJsSign} from './api'
 
-function scanCode(callback) {  
+function scanCode() {  
   wx.scanQRCode({  
     needResult : 1,  
     scanType : [ 'qrCode', 'barCode' ],  

@@ -4,6 +4,7 @@ import MapClass from './common/mapClass.js'
 import sendMessage from '../common/sendMessage/message'
 import qs from './common/qs'
 import {getSiteInfo} from './common/api'
+import {bindScan} from './common/scan'
 // let query = qs.urlParse()
 // 显示店铺名称DOM
 const titleDom = document.getElementById('title')
@@ -11,6 +12,8 @@ const titleDom = document.getElementById('title')
 const addressDom = document.getElementById('address')
 // 立即定位按钮
 const navigationBtn = document.getElementById('navigationBtn')
+// 扫码按钮
+const scanBtn = document.getElementById('scanBtn')
 // 地图实例
 let mapInst
 // 地图定位插件实例
@@ -63,4 +66,4 @@ function navigationBtnClick () {
   }
 }
 
-
+bindScan(scanBtn)
