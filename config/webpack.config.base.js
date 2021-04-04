@@ -45,7 +45,6 @@ module.exports = {
       { // 对 css 后缀名进行处理
         test: /\.css$/,
         // 不处理 node_modules 文件中的 css 文件
-        exclude: /node_modules/,
         // 抽取 css 文件到单独的文件夹
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
