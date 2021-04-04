@@ -1,0 +1,31 @@
+.loadingToast{
+    display: none;
+}
+body[loadingtoast=true] .loadingToast{
+    display: block;
+
+    .weui-toast {
+        position: fixed;
+        z-index: 5000;
+        width: 2.12rem;
+        min-height: 2.12rem;
+        top: 50%;
+        left: 50%;
+        margin: -1.06rem;
+        background: hsla(0,0%,7%,.7);
+        text-align: center;
+        border-radius: 5px;
+        color: #fff;
+        transform: translateY(-50%);
+
+        .weui-loading{
+            margin: .6rem 0 0;
+            width: .76em;
+            height: .76em;
+            font-size: .76rem;
+        }
+        .weui-toast__content{
+            font-size: .28rem;
+        }
+    }
+}
