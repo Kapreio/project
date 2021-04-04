@@ -47,6 +47,16 @@ export function getSiteInfo (params) {
   })
 }
 
+export function getSiteList (params) {
+  return axiosCreation({
+    url: '/wx/site/list',
+    method: 'POST',
+    data: params,
+  })
+}
+
+
+
 export function getUseInfo (params) {
   return axiosCreation({
     url: '/wx/user/info',

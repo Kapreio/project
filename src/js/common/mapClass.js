@@ -112,7 +112,8 @@ export default class MapClass{
     return this.offlineSelectedIcon || this.createOfflineSelectIcon()
   }
   // 创建并返回marker
-  createMarker (data) {
+  createMarker (data) { 
+    if (!data.latitude|| !data.longitude ) return null
     let icon
     let marker
     // 获得默认icon,未创建则创建
@@ -133,8 +134,10 @@ export default class MapClass{
   // 创建返回marker列表
   createMarkers (list) {
     let markers = []
+    let marker = null
     for (let v of list) {
-      markers.push(this.createMarker(v))
+      marker =this.createMarker(v)
+      marker && markers.push(marker)
     }
     return markers
   } 
