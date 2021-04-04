@@ -119,4 +119,11 @@ export function getWxJsSign (params) {
     data: params,
   })
 }
+export function postWxScan (params) {
+  return axiosCreation({
+    url: '/wx/scan',
+    method: 'POST',
+    data: params,
+  })
+}
 

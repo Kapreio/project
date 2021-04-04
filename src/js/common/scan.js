@@ -1,4 +1,4 @@
-import {getWxJsSign} from './api'
+import {getWxJsSign,postWxScan} from './api'
 
 function scanCode() {  
   wx.scanQRCode({  
@@ -6,6 +6,12 @@ function scanCode() {
     scanType : [ 'qrCode', 'barCode' ],  
     success : function(res) {  
       alert(`success!\n Result:${res.resultStr}`)
+      postWxScan({
+        name:res.resultStr,
+      })
+        .then(data=>{
+          alert(JSON.stringify(data))
+        })
     },  
     fail : function(res) {  
       alert('fail' + JSON.stringify(res))
