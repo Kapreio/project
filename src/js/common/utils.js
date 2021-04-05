@@ -58,4 +58,9 @@ function is_weixin(){
 
   return false  
 }
-export {getCookie,setCookie,is_weixin}
+function weixinOnly(){
+  if(!is_weixin()){
+    document.body.innerHTML = '<h2 class="weixin-only">请使用微信打开！！！</h2>'
+  }
+}
+export {getCookie,setCookie,is_weixin,weixinOnly}

@@ -4,6 +4,7 @@ import MapClass from './common/mapClass.js' // 导入map相关操作的封装类
 import sendMessage from '../common/sendMessage/message' // 引入通知小组件
 import {bindScan} from './common/scan'
 import {getSiteList} from './common/api'
+import {weixinOnly} from './common/utils'
 // marker点数据，后期使用请求获取
 // const markerList = [
 //   {
@@ -153,3 +154,5 @@ window.mapInst = mapInst
 
 bindScan(scanBtn)
 // console.log(wx)
+
+weixinOnly()

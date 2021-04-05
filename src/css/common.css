@@ -35,3 +35,10 @@ div,
 ul {
     -webkit-overflow-scrolling: touch;
 }
+.weixin-only{
+    position: absolute;
+    top:50%;
+    left: 0;
+    width: 100%;
+    transform: translateY(-50%);
+}
