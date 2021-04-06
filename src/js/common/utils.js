@@ -49,6 +49,10 @@ function setCookie(c_name, value, expiredays) {
     document.cookie = `${c_name}=${escape(value) + (expiredays == null ? '' : ';expires=' + exdate.toGMTString())}`
   }			
 }
+/**
+ * 判断是否微信webview打开
+ * @return Boolean 
+ */
 function is_weixin(){  
   var ua = navigator.userAgent.toLowerCase()  
   // /i忽略大小写  
@@ -58,6 +62,9 @@ function is_weixin(){
 
   return false  
 }
+/**
+ * 非微信打开相关操作
+ */
 function weixinOnly(){
   if(!is_weixin()){
     document.body.innerHTML = '<h2 class="weixin-only">请使用微信打开！！！</h2>'

@@ -5,7 +5,6 @@ import qs from './common/qs'
 import {getBalance} from './common/api'
 import '../common/loginValidate/loginValidate'
 
-
 const balance = document.getElementById('balance')
 const chargeLog = document.getElementById('chargeLog')
 const chargeInput = document.getElementById('chargeInput')

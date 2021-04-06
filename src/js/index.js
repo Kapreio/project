@@ -1,54 +1,34 @@
 import '../css/common.css'
 import '../css/index.less'
-import MapClass from './common/mapClass.js' // 导入map相关操作的封装类引入
+// 导入map相关操作的封装类引入，必须在HTML页面中引用高德JS-SDK文件
+import MapClass from './common/mapClass.js' 
 import sendMessage from '../common/sendMessage/message' // 引入通知小组件
-import {bindScan} from './common/scan'
-import {getSiteList} from './common/api'
+// 导入微信扫码功能模块，必须在HTML页面中引用微信JS-SDK文件
+import {bindScan} from './common/scan' 
+// 导入获取站点接口
+import {getSiteList} from './common/api' 
+// 导入是否微信打开方法
 import {weixinOnly} from './common/utils'
-// marker点数据，后期使用请求获取
-// const markerList = [
-//   {
-//     id:'1',
-//     longitude:118.775961,
-//     latitude:31.997375,
-//     name:'南山路洗车店',
-//     address:'南京市雨花台区雨花南路520号-文字扩充文字扩充文字扩充文字扩充文字扩充文字扩充',
-//   },
-//   {
-//     longitude:118.797075,
-//     latitude:31.98995,
-//     name:'网点2',
-//     status:0,
-//   },
-//   {
-//     longitude:118.7939,
-//     latitude:32.012441,
-//     name:'网点3',
-//   },
-// ]
-// 定位按钮
-const locateBtn = document.getElementById('locateBtn')
-// 扫码按钮
-const scanBtn = document.getElementById('scanBtn')
-// marker选中的位移
-const bigMarkerOffset = new AMap.Pixel(-55,-120)
 
-// 创建地图实例
-let mapInst = new MapClass('mapContain',{})
-// 初始定位组件
-let geolocation = mapInst.initGeolocation()
 
+
+const locateBtn = document.getElementById('locateBtn') // 定位按钮
+const scanBtn = document.getElementById('scanBtn') // 扫码按钮
+const bigMarkerOffset = new AMap.Pixel(-55,-120) // marker选中的位移
+let mapInst = new MapClass('mapContain',{}) // 创建地图实例
+let geolocation = mapInst.initGeolocation() // 初始定位组件
 let popupNavDom // 保存popup导航按钮DOM
 
-// 添加marker要到地图
-// mapInst.addMarkers(markerList)
 
+// 获取当前位置
 geolocation.getCurrentPosition((status,result)=>{
   if(status === 'complete' && result.position){
-    // console.log(result.position)
+    // 定位功能,传入当前坐标,获取附近站点
     getSiteList({latitude:result.position.lat,longitude:result.position.lng})
       .then(data=>{
+        // 添加站点到到地图
         mapInst.addMarkers(data)
+        // 给所有站点marker绑定点击事件
         markersBindClick()
       })
   }
@@ -99,6 +79,7 @@ function markersBindClick() {
         marker.setOffset(mapInst.markerOffset)
       })
     }
+    // 先取消事件绑定,避免marker重复绑定事件
     marker.off('click')
     marker.on('click', () => {
     // 点击marker,显示popup信息窗体
@@ -151,8 +132,7 @@ locateBtn.addEventListener('click',function(){
 
 // 暴露出地图实例，用于调试
 window.mapInst = mapInst
-
+// 扫码整个绑定到定位按钮
 bindScan(scanBtn)
-// console.log(wx)
-
+// 添加微信打开限制
 weixinOnly()

@@ -1,31 +1,39 @@
 import axios from 'axios'
-import qs from 'qs'
+// import qs from 'qs'
 
 const baseURL = process.env.NODE_ENV === 'production'
   ? 'http://localhost:8080/' // 生产
   : '/apis' // 开发
-
+// 创建一个axios实例,配置相关参数
 let axiosIns = axios.create({
   baseURL,
-  timeout: 15000,
+  timeout: 5000,
   headers: {'Content-Type':'application/json; charset=utf-8'},
 })
+// 对发送请求进行拦截
 axiosIns.interceptors.request.use(config => {
   return config
 }, error => {
   return Promise.reject(error)
 })
+// 对请求的响应进行拦截
 axiosIns.interceptors.response.use(function (rawResp = {data: {}}) {
 
-  if (rawResp.data.msg === 'success' && rawResp.data.status === 10200) {
+  if (rawResp.data.msg === 'success' && rawResp.data.status === 10200) { // 数据获取成功
     return rawResp.data.data
-  } else {
+  } else { 
+    // 失败返回一个立即执行Reject的Promise
     return Promise.reject(rawResp.data.msg)
   }
 }, function (error) {
+  // 请求出错
   return Promise.reject(error)
 })
-function axiosCreation ({method = 'GET'} = {}, enableQs = true) {
+/**
+ * 创建一个axios请求
+ * 返回一个aixos实例
+ */
+function axiosCreation ({method = 'GET'} = {}) {
   let arg = arguments[0]
   let opts = Object.assign({method}, arg)
   opts.method === 'GET' && !opts.params && (opts.params = opts.data)
@@ -38,7 +46,13 @@ function axiosCreation ({method = 'GET'} = {}, enableQs = true) {
   
   return axiosIns(opts)
 }
-
+/**
+ * 站点 / 获取站点信息
+ * @param {Object} params 
+ * {
+ *    id:2 // 站点id
+ * }
+ */
 export function getSiteInfo (params) {
   return axiosCreation({
     url: '/wx/site/info',
@@ -46,7 +60,14 @@ export function getSiteInfo (params) {
     data: params,
   })
 }
-
+/**
+ * 站点 / 根据经纬度获取站点列表（暂时返回所有）
+ * @param {Object} params 
+ * {
+ *    longitude:30.144508, // 经度
+ *    latitude:120.104170 // 纬度
+ * }
+ */
 export function getSiteList (params) {
   return axiosCreation({
     url: '/wx/site/list',
@@ -56,7 +77,7 @@ export function getSiteList (params) {
 }
 
 
-
+// 用户 / 获取用户信息
 export function getUseInfo (params) {
   return axiosCreation({
     url: '/wx/user/info',
@@ -64,7 +85,7 @@ export function getUseInfo (params) {
     data: params,
   })
 }
-
+// 用户 / 获取余额
 export function getBalance (params) {
   return axiosCreation({
     url: '/wx/user/balance',
@@ -72,7 +93,7 @@ export function getBalance (params) {
     data: params,
   })
 }
-
+// 用户 / 充值/消费记录
 export function getRecord (params,cost) {
   return axiosCreation({
     url: `/wx/user/${cost ? 'consume': 'chargemoney'}_record`,
@@ -80,7 +101,7 @@ export function getRecord (params,cost) {
     data: params,
   })
 }
-
+// 用户 / 关联手机号列表
 export function getRelevanceList (params) {
   return axiosCreation({
     url: '/wx/user/relevance_list',
@@ -88,7 +109,7 @@ export function getRelevanceList (params) {
     data: params,
   })
 }
-
+// 用户 / 增加关联手机号
 export function relevanceAdd (params) {
   return axiosCreation({
     url: '/wx/user/relevance_add',
@@ -96,7 +117,7 @@ export function relevanceAdd (params) {
     data: params,
   })
 }
-
+// 用户 / 取消关联手机号
 export function relevanceCancel (params) {
   return axiosCreation({
     url: '/wx/user/relevance_cancel',
@@ -104,6 +125,7 @@ export function relevanceCancel (params) {
     data: params,
   })
 }
+//   短信 / 发送短信
 export function smsPost (params) {
   return axiosCreation({
     url: '/sms/post',
@@ -111,7 +133,7 @@ export function smsPost (params) {
     data: params,
   })
 }
-
+// 微信 / 获取 js 签名
 export function getWxJsSign (params) {
   return axiosCreation({
     url: '/wx/jssign',
@@ -119,6 +141,7 @@ export function getWxJsSign (params) {
     data: params,
   })
 }
+// 微信 / 扫一扫
 export function postWxScan (params) {
   return axiosCreation({
     url: '/wx/scan',
