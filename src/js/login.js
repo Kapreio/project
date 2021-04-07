@@ -1,7 +1,7 @@
 import '../css/common.css'
 import '../css/login.less'
 import sendMessage from '../common/sendMessage/message' // 引入通知小组件
-import {smsPost} from './common/api'
+import {smsPost,getWxCodeurl,wxLogin} from './common/api'
 // 电话输入表单DOM
 const telInput = document.getElementById('telInput')
 // 验证码输入DOM
@@ -90,3 +90,11 @@ loginBtn.addEventListener('click',function(){
   if(validate()) location.href ='mine.html'     
 })
 // console.log(telInput,codeInput,getCode)
+getWxCodeurl()
+  .then(code=>{
+    wxLogin({code})
+      .then(data=>{
+        console.log(data)
+      })
+      .catch(err=>console.log(err))
+  })

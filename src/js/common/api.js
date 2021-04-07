@@ -149,4 +149,21 @@ export function postWxScan (params) {
     data: params,
   })
 }
+// 微信 / 扫一扫
+export function getWxCodeurl(params) {
+  return axiosCreation({
+    url: '/wx/codeurl',
+    method: 'POST',
+    data: params,
+  })
+}
+// 微信 / 扫一扫
+export function wxLogin(params) {
+  return axiosCreation({
+    url: '/wx/login',
+    method: 'POST',
+    data: params,
+  })
+}
+
 
