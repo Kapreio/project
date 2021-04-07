@@ -2,6 +2,7 @@ import '../css/common.css'
 import '../css/login.less'
 import sendMessage from '../common/sendMessage/message' // 引入通知小组件
 import {smsPost,getWxCodeurl,wxLogin} from './common/api'
+import qs from './common/qs'
 // 电话输入表单DOM
 const telInput = document.getElementById('telInput')
 // 验证码输入DOM
@@ -90,11 +91,22 @@ loginBtn.addEventListener('click',function(){
   if(validate()) location.href ='mine.html'     
 })
 // console.log(telInput,codeInput,getCode)
-getWxCodeurl()
-  .then(code=>{
-    wxLogin({code})
-      .then(data=>{
-        console.log(data)
-      })
-      .catch(err=>console.log(err))
-  })
+if (!qs.urlParse().code) {
+  getWxCodeurl()
+    .then(url=>{
+      let urlStr = url.split('?')[0]
+      let querys = url.split('?')[1]
+      location.href = urlStr + '?' + qs.stringify(Object.assign({},qs.parse(querys),{redirect_uri:location.href}))
+    // wxLogin({code})
+    //   .then(data=>{
+    //     console.log(data)
+    //   })
+    //   .catch(err=>console.log(err))
+    })
+} else {
+  wxLogin({code:qs.urlParse().code})
+    .then(data=>{
+      console.log(data)
+    })
+    .catch(err=>console.log(err))
+}
