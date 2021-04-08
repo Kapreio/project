@@ -1,5 +1,5 @@
 import axios from 'axios'
-// import qs from 'qs'
+import qs from 'qs'
 
 const baseURL = process.env.NODE_ENV === 'production'
   ? 'http://localhost:8080/' // 生产
@@ -165,5 +165,19 @@ export function wxLogin(params) {
     data: params,
   })
 }
+
+export function getWxAutoUrl(redirect_uri) {
+  return getWxCodeurl()
+    .then(url=>{
+      let urlStr = url.split('?')[0]
+      let querys = url.split('?')[1]
+      return urlStr + '?' + qs.stringify(Object.assign(
+        {},
+        qs.parse(querys),
+        {redirect_uri: redirect_uri || location.href}
+      ))
+    })
+}
+  
 
 

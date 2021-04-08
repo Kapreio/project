@@ -1,7 +1,7 @@
 import '../css/common.css'
 import '../css/login.less'
 import sendMessage from '../common/sendMessage/message' // 引入通知小组件
-import {smsPost,getWxCodeurl,wxLogin} from './common/api'
+import {smsPost,getWxAutoUrl,wxLogin} from './common/api'
 import qs from './common/qs'
 // 电话输入表单DOM
 const telInput = document.getElementById('telInput')
@@ -92,17 +92,8 @@ loginBtn.addEventListener('click',function(){
 })
 // console.log(telInput,codeInput,getCode)
 if (!qs.urlParse().code) {
-  getWxCodeurl()
-    .then(url=>{
-      let urlStr = url.split('?')[0]
-      let querys = url.split('?')[1]
-      location.href = urlStr + '?' + qs.stringify(Object.assign({},qs.parse(querys),{redirect_uri:location.href}))
-    // wxLogin({code})
-    //   .then(data=>{
-    //     console.log(data)
-    //   })
-    //   .catch(err=>console.log(err))
-    })
+  getWxAutoUrl()
+    .then(url=> location.href = url)
 } else {
   wxLogin({code:qs.urlParse().code})
     .then(data=>{
