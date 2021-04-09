@@ -2,8 +2,8 @@ import axios from 'axios'
 import qs from 'qs'
 
 const baseURL = process.env.NODE_ENV === 'production'
-  ? 'http://localhost:8080/' // 生产
-  : '/apis' // 开发
+  ? '/apis' // 生产
+  : 'http://carwash1.eveabc.com/' // 开发
 // 创建一个axios实例,配置相关参数
 let axiosIns = axios.create({
   baseURL,
