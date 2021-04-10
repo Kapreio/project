@@ -1,6 +1,7 @@
 import axios from 'axios'
 import qs from 'qs'
-
+import {getCookie,setCookie} from './utils'
+ 
 const baseURL = process.env.NODE_ENV === 'production'
   ? 'http://carwash1.eveabc.com/' // 生产
   : '/apis' // 开发
@@ -128,7 +129,7 @@ export function relevanceCancel (params) {
 //   短信 / 发送短信
 export function smsPost (params) {
   return axiosCreation({
-    url: '/sms/post',
+    url: '/wx/sms/post',
     method: 'POST',
     data: params,
   })
@@ -149,7 +150,7 @@ export function postWxScan (params) {
     data: params,
   })
 }
-// 微信 / 扫一扫
+// 微信 / 获取授权URL
 export function getWxCodeurl(params) {
   return axiosCreation({
     url: '/wx/codeurl',
@@ -157,10 +158,26 @@ export function getWxCodeurl(params) {
     data: params,
   })
 }
-// 微信 / 扫一扫
+// 微信 / 登录
 export function wxLogin(params) {
   return axiosCreation({
     url: '/wx/login',
+    method: 'POST',
+    data: params,
+  })
+}
+
+/**
+ * 用户 / 用户绑定手机号
+ * @export
+ * @param {*} params
+ * phone 手机号码
+ * code 短信验证码
+ * @returns
+ */
+export function bindPhone(params) {
+  return axiosCreation({
+    url: '/wx/user/bindphone',
     method: 'POST',
     data: params,
   })
@@ -177,6 +194,21 @@ export function getWxAutoUrl(redirect_uri) {
         {redirect_uri: redirect_uri || location.href}
       ))
     })
+}
+
+export function getWxCode(){
+  let wxCode = getCookie('wxCode')
+  if(wxCode) {
+    return Promise.resolve(wxCode)
+  }
+  let querys = qs.urlParse()
+  if (querys.code) {
+    setCookie('wxCode',querys.code)
+    return Promise.resolve(querys.code)
+  }
+  getWxAutoUrl()
+    .then(url=>location.href =url )
+  return  Promise.resolve()
 }
   
 

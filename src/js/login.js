@@ -1,14 +1,15 @@
 import '../css/common.css'
 import '../css/login.less'
 import sendMessage from '../common/sendMessage/message' // 引入通知小组件
-import {smsPost,getWxAutoUrl,wxLogin} from './common/api'
-import qs from './common/qs'
+import {smsPost,getWxCode,wxLogin,bindPhone} from './common/api'
+// import qs from './common/qs'
 // 电话输入表单DOM
 const telInput = document.getElementById('telInput')
 // 验证码输入DOM
 const codeInput = document.getElementById('codeInput')
 // 获取验证码DOM
 const getCode = document.getElementById('getCode')
+const telReg = new RegExp(/^((13[0-9])|(17[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/)
 // 登陆按钮DOM
 const loginBtn = document.getElementById('loginBtn')
 // 再次获取验证码间隔时长
@@ -20,7 +21,7 @@ let countDownString ='重新获取'
 
 // 获取验证码按钮绑定事件
 getCode.addEventListener('click',function(){
-  if (!/^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/.test(telInput.value.trim())) {
+  if (!telReg.test(telInput.value.trim())) {
     telInput.parentElement.setAttribute('error','true')
     return false
   } else{
@@ -66,6 +67,10 @@ codeInput.addEventListener('input',loginBtnEnabel)
  */
 function loginBtnEnabel() {
   // 电话输入和验证码表单不为空，则登录按钮为可用状态
+  if(!getCode.parentElement.getAttribute('countDown')){
+    loginBtn.setAttribute('enable', 'false')
+    return false
+  }
   codeInput.value.trim()!=='' && telInput.value.trim()!==''
     ? loginBtn.setAttribute('enable', 'true')
     : loginBtn.setAttribute('enable', 'false')
@@ -77,7 +82,7 @@ function loginBtnEnabel() {
  * return Boolean 是否合法
  */
 function validate() {
-  if (!/^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/.test(telInput.value.trim())) {
+  if (!telReg.test(telInput.value.trim())) {
     telInput.parentElement.setAttribute('error','true')
     return false
   } else {
@@ -87,17 +92,20 @@ function validate() {
 }
 // 登录按钮绑定事件
 loginBtn.addEventListener('click',function(){
-  if (!this.getAttribute('enable')) return false
-  if(validate()) location.href ='mine.html'     
+  if (this.getAttribute('enable')!=='true') return false
+  if(validate()){
+    bindPhone({
+      phone:telInput.value.trim(),
+      code:codeInput.value.trim(),
+    })
+      .then(data=>{
+        console.log(data)
+      })
+      .catch(err=>{
+        sendMessage({msg:err})
+      })
+  }    
 })
 // console.log(telInput,codeInput,getCode)
-if (!qs.urlParse().code) {
-  getWxAutoUrl()
-    .then(url=> location.href = url)
-} else {
-  wxLogin({code:qs.urlParse().code})
-    .then(data=>{
-      console.log(data)
-    })
-    .catch(err=>console.log(err))
-}
+getWxCode()
+  .then(code=>console.log(code))
