@@ -26,7 +26,7 @@ getCode.addEventListener('click',function(){
   } else{
   // 倒计时未结束不能再次获取
     if (this.parentElement.getAttribute('countDown') === 'true') return false
-    smsPost({name:telInput.value.trim()})
+    smsPost({phone:telInput.value.trim()})
       .then(()=>{
         sendMessage({msg:'验证码获取成功....'})
         // 保存倒计时时长
