@@ -1,6 +1,6 @@
 import axios from 'axios'
 import qs from 'qs'
-import {getCookie,setCookie} from './utils'
+import {setCookie} from './utils'
  
 const baseURL = process.env.NODE_ENV === 'production'
   ? 'http://carwash1.eveabc.com/' // 生产
@@ -22,7 +22,16 @@ axiosIns.interceptors.response.use(function (rawResp = {data: {}}) {
 
   if (rawResp.data.msg === 'success' && rawResp.data.status === 10200) { // 数据获取成功
     return rawResp.data.data
-  } else { 
+  } else if(rawResp.data.status === 10402){
+    getWxCode()
+      .then(code=>{
+        wxLogin({code})
+          .than(data=>{
+            setCookie('logined',data)
+          })
+      })
+  }
+  else{ 
     // 失败返回一个立即执行Reject的Promise
     return Promise.reject(rawResp.data.msg)
   }
@@ -182,6 +191,20 @@ export function bindPhone(params) {
     data: params,
   })
 }
+/**
+ * 微信 / 微信支付，生成预支付订单及数据，用于js sdk支付使用
+ *
+ * @export
+ * @param {*} params
+ * @returns
+ */
+export function jsPay(params) {
+  return axiosCreation({
+    url: '/wx/jspay',
+    method: 'POST',
+    data: params,
+  })
+}
 
 export function getWxAutoUrl(redirect_uri) {
   return getWxCodeurl()
@@ -197,13 +220,8 @@ export function getWxAutoUrl(redirect_uri) {
 }
 
 export function getWxCode(){
-  let wxCode = getCookie('wxCode')
-  if(wxCode) {
-    return Promise.resolve(wxCode)
-  }
   let querys = qs.urlParse()
   if (querys.code) {
-    setCookie('wxCode',querys.code)
     return Promise.resolve(querys.code)
   }
   getWxAutoUrl()

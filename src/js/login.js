@@ -2,7 +2,8 @@ import '../css/common.css'
 import '../css/login.less'
 import sendMessage from '../common/sendMessage/message' // 引入通知小组件
 import {smsPost,getWxCode,wxLogin,bindPhone} from './common/api'
-// import qs from './common/qs'
+import {setCookie} from './common/utils'
+import qs from './common/qs'
 // 电话输入表单DOM
 const telInput = document.getElementById('telInput')
 // 验证码输入DOM
@@ -108,4 +109,12 @@ loginBtn.addEventListener('click',function(){
 })
 // console.log(telInput,codeInput,getCode)
 getWxCode()
-  .then(code=>console.log(code))
+  .then(code=>{
+    wxLogin({code})
+      .then(data=>{
+        setCookie('logined',data)
+        location.href = qs.urlParse().href
+      })
+  })
+
+
