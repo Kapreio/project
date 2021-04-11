@@ -99,8 +99,9 @@ loginBtn.addEventListener('click',function(){
       phone:telInput.value.trim(),
       code:codeInput.value.trim(),
     })
-      .then(data=>{
-        console.log(data)
+      .then(()=>{
+        sendMessage({msg:'登录成功'})
+        location.href = qs.urlParse().href ?qs.urlParse().href : 'mine.html'
       })
       .catch(err=>{
         sendMessage({msg:err})
