@@ -26,7 +26,7 @@ axiosIns.interceptors.response.use(function (rawResp = {data: {}}) {
     getWxCode()
       .then(code=>{
         wxLogin({code})
-          .than(data=>{
+          .then(data=>{
             setCookie('logined',data)
           })
       })
@@ -200,7 +200,7 @@ export function bindPhone(params) {
  */
 export function jsPay(params) {
   return axiosCreation({
-    url: '/wx/jspay',
+    url: '/wx/pay/jspay',
     method: 'POST',
     data: params,
   })
@@ -231,7 +231,7 @@ export function getWxCode(){
   }
   getWxAutoUrl()
     .then(url=>location.href =url )
-  return  Promise.resolve()
+  return Promise.resolve()
 }
   
 

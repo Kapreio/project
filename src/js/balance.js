@@ -4,7 +4,7 @@ import sendMessage from '../common/sendMessage/message'
 import qs from './common/qs'
 import {getBalance,jsPay} from './common/api'
 import {loadingToast} from '../common/weui/weui' // 导入微信toast样式
-import '../common/loginValidate/loginValidate'
+// import '../common/loginValidate/loginValidate'
 
 const balance = document.getElementById('balance')
 const chargeLog = document.getElementById('chargeLog')
@@ -17,8 +17,8 @@ chargeLog.href = chargeLog.href +  `?id=${query.id}`
 
 getBalance()
   .then(data=>{
-    balance.innerHTML = data.toFixed(2)
-    query.balance = data
+    query.balance = data || 0
+    balance.innerHTML = query.balance.toFixed(2)
     chargeInput.addEventListener('input',function(){
       if(this.value){
         afterBalance.innerHTML = query.balance - 0 + parseInt(this.value)
@@ -31,14 +31,15 @@ getBalance()
       if(chargeInput.value >= 10) {
         query.balance =  query.balance - 0 + parseInt(chargeInput.value)
         balance.innerHTML = query.balance
-        chargeInput.value = ''
         loadingToast('充值中，请稍候...')
+        console.log(chargeInput.value)
         jsPay({
           type:2,
-          finalmoney:chargeInput.value,
+          finalmoney:parseFloat(chargeInput.value),
         })
           .then(data=>{
-            chargeAfter.setAttribute('show',false)
+            chargeAfter.setAttribute('show',false)            
+            chargeInput.value = ''
             console.log(data)
           })
           .catch(err=>{
