@@ -1,6 +1,6 @@
 import axios from 'axios'
 import qs from 'qs'
-import {setCookie} from './utils'
+import {getCookie,setCookie} from './utils'
  
 const baseURL = process.env.NODE_ENV === 'production'
   ? 'http://carwash1.eveabc.com/' // 生产
@@ -221,7 +221,12 @@ export function getWxAutoUrl(redirect_uri) {
 
 export function getWxCode(){
   let querys = qs.urlParse()
+  let wxCode = getCookie('wxCode')
+  if (wxCode && querys.hasCode) {
+    return Promise.resolve(wxCode)
+  }
   if (querys.code) {
+    setCookie('wxCode',querys.code,5)
     return Promise.resolve(querys.code)
   }
   getWxAutoUrl()

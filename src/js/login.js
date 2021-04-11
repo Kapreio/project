@@ -113,7 +113,7 @@ getWxCode()
     wxLogin({code})
       .then(data=>{
         setCookie('logined',data)
-        location.href = qs.urlParse().href
+        qs.urlParse().href && (location.href = qs.urlParse().href)
       })
   })
 
