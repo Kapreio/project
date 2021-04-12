@@ -22,7 +22,7 @@ axiosIns.interceptors.response.use(function (rawResp = {data: {}}) {
 
   if (rawResp.data.msg === 'success' && rawResp.data.status === 10200) { // 数据获取成功
     return rawResp.data.data
-  } else if(rawResp.data.status === 10402){
+  } else if(rawResp.data.status === 10402 || rawResp.data.status === 10401){
     getWxCode()
       .then(code=>{
         wxLogin({code})
@@ -30,8 +30,9 @@ axiosIns.interceptors.response.use(function (rawResp = {data: {}}) {
             setCookie('logined',data)
           })
       })
-  }
-  else{ 
+  } else if(rawResp.data.status === 10500){
+    location.href = 'login.html?unbind=true'
+  } else{ 
     // 失败返回一个立即执行Reject的Promise
     return Promise.reject(rawResp.data.msg)
   }
