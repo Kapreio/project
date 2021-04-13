@@ -4,7 +4,7 @@ import MapClass from './common/mapClass.js'
 import sendMessage from '../common/sendMessage/message'
 import qs from './common/qs'
 import {getSiteInfo} from './common/api'
-import {bindScan} from './common/scan'
+import {bindScan} from './common/wxJsSdk'
 // let query = qs.urlParse()
 // 显示店铺名称DOM
 const titleDom = document.getElementById('title')
