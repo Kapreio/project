@@ -16,5 +16,9 @@ module.exports = webpackMerge(webpackBase, {
     new webpack.optimize.CommonsChunkPlugin({
       // chunk 名为 commons
       name: 'commons', filename: '[name].bundle.js',
-    })],
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production'),
+    }),
+  ],
 })

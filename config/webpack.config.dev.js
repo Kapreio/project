@@ -4,8 +4,13 @@ const webpackBase = require('./webpack.config.base')
 const webpackMerge = require('webpack-merge')
 // 引入配置文件
 const config = require('./config')
+const webpack = require('webpack')
+
 // 合并配置文件
 module.exports = webpackMerge(webpackBase, {
+  plugins: [new webpack.DefinePlugin({
+    'process.env.NODE_ENV': JSON.stringify('development'),
+  })],
   // 配置 webpack-dev-server
   devServer: {
     // 项目根目录
