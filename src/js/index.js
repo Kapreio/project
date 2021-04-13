@@ -4,7 +4,7 @@ import '../css/index.less'
 import MapClass from './common/mapClass.js' 
 import sendMessage from '../common/sendMessage/message' // 引入通知小组件
 // 导入微信扫码功能模块，必须在HTML页面中引用微信JS-SDK文件
-import {bindScan} from './common/scan' 
+import {bindScan} from './common/wxJsSdk' 
 // 导入获取站点接口
 import {getSiteList} from './common/api' 
 // 导入是否微信打开方法
