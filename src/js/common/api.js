@@ -19,15 +19,16 @@ axiosIns.interceptors.request.use(config => {
 })
 // 对请求的响应进行拦截
 axiosIns.interceptors.response.use(function (rawResp = {data: {}}) {
-
+  console.log(rawResp,rawResp.data.status)
   if (rawResp.data.msg === 'success' && rawResp.data.status === 10200) { // 数据获取成功
     return rawResp.data.data
-  } else if(rawResp.data.status === 10402 || rawResp.data.status === 10401){
+  } else if(rawResp.data.status === 10402 || rawResp.data.status === 10401 || rawResp.data.status === 10408){
     getWxCode()
       .then(code=>{
-        wxLogin({code})
+        code && wxLogin({code})
           .then(data=>{
             setCookie('logined',data)
+            location.reload()
           })
       })
   } else if(rawResp.data.status === 10500){
@@ -212,11 +213,14 @@ export function getWxAutoUrl(redirect_uri) {
     .then(url=>{
       let urlStr = url.split('?')[0]
       let querys = url.split('?')[1]
-      return urlStr + '?' + qs.stringify(Object.assign(
+      querys = qs.stringify(Object.assign(
         {},
         qs.parse(querys),
         {redirect_uri: redirect_uri || location.href}
       ))
+      urlStr += '?' + querys
+      console.log(qs.parse(querys))
+      return  urlStr
     })
 }
 
@@ -231,7 +235,9 @@ export function getWxCode(){
     return Promise.resolve(querys.code)
   }
   getWxAutoUrl()
-    .then(url=>location.href =url )
+    .then(url=>{
+      location.href = url
+    })
   return Promise.resolve()
 }
   
