@@ -2,8 +2,9 @@ import '../css/common.css'
 import '../css/balance.less'
 import sendMessage from '../common/sendMessage/message'
 import qs from './common/qs'
-import {getBalance,jsPay} from './common/api'
+import {getBalance} from './common/api'
 import {loadingToast} from '../common/weui/weui' // 导入微信toast样式
+import {wxPay} from './common/wxJsSdk'
 // import '../common/loginValidate/loginValidate'
 
 const balance = document.getElementById('balance')
@@ -29,25 +30,29 @@ getBalance()
     })
     chargeNow.addEventListener('click',function(){
       if(chargeInput.value >= 10) {
-        query.balance =  query.balance - 0 + parseInt(chargeInput.value)
-        balance.innerHTML = query.balance
-        loadingToast('充值中，请稍候...')
-        console.log(chargeInput.value)
-        jsPay({
-          type:2,
-          finalmoney:parseFloat(chargeInput.value),
-        })
-          .then(data=>{
-            chargeAfter.setAttribute('show',false)            
+        loadingToast({msg:'充值中，请稍候...'})
+        wxPay({
+          payInfo:{
+            type:2,
+            finalmoney:parseFloat(chargeInput.value),
+          },
+          success () {           
+            sendMessage({msg:'充值金额成功！'})     
+            query.balance =  query.balance - 0 + parseFloat(chargeInput.value)
+            balance.innerHTML = query.balance     
             chargeInput.value = ''
-            console.log(data)
-          })
-          .catch(err=>{
+          },
+          fail(err){
+            sendMessage({msg:'支付失败：' + err})   
+          },
+          cancel () {
+            sendMessage({msg:'您已取消支付操作....'})
+          },
+          complete () {
+            loadingToast({hide:true})            
             chargeAfter.setAttribute('show',false)
-            sendMessage({msg:err})
-          })
-        chargeAfter.setAttribute('show',false)
-        sendMessage({msg:'充值金额成功！'})
+          },
+        })
       } else {
         chargeInput.focus()
         sendMessage({msg:'请输入正确的充值金额！！！'})
