@@ -1,5 +1,5 @@
 import axios from 'axios'
-import qs from 'qs'
+import qs from './qs'
 import {getCookie,setCookie} from './utils'
  
 const baseURL = process.env.NODE_ENV === 'production'
@@ -23,16 +23,11 @@ axiosIns.interceptors.response.use(function (rawResp = {data: {}}) {
   if (rawResp.data.msg === 'success' && rawResp.data.status === 10200) { // 数据获取成功
     return rawResp.data.data
   } else if(rawResp.data.status === 10402 || rawResp.data.status === 10401 || rawResp.data.status === 10408){
-    getWxCode()
-      .then(code=>{
-        code && wxLogin({code})
-          .then(data=>{
-            setCookie('logined',data)
-            location.reload()
-          })
-      })
+    wxLoginBack()
   } else if(rawResp.data.status === 10500){
-    location.href = 'login.html?unbind=true'
+    alert('当前页面需要登录后才能访问，请登录！') 
+    document.body.innerHTML = '<div>请登录！</div>'
+    location.href = `login.html?href=${location.href}&ubind=true`
   } else{ 
     // 失败返回一个立即执行Reject的Promise
     return Promise.reject(rawResp.data.msg)
@@ -208,7 +203,7 @@ export function jsPay(params) {
   })
 }
 
-export function getWxAutoUrl(redirect_uri) {
+export function getWxAutoUrl() {
   return getWxCodeurl()
     .then(url=>{
       let urlStr = url.split('?')[0]
@@ -216,7 +211,7 @@ export function getWxAutoUrl(redirect_uri) {
       querys = qs.stringify(Object.assign(
         {},
         qs.parse(querys),
-        {redirect_uri: redirect_uri || location.href}
+        {redirect_uri:location.href}
       ))
       urlStr += '?' + querys
       console.log(qs.parse(querys))
@@ -240,6 +235,18 @@ export function getWxCode(){
     })
   return Promise.resolve()
 }
-  
+
+export function wxLoginBack(){
+  getWxCode()
+    .then(code=>{
+      code && wxLogin({code})
+        .then(data=>{
+          setCookie('logined',data)
+          qs.urlParse().href 
+            ? (location.href = qs.urlParse().href)
+            : location.reload()
+        })
+    })
+} 
 
 
