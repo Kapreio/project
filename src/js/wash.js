@@ -1,6 +1,9 @@
 import '../css/common.css'
 import '../css/wash.less'
-import {getBalance} from './common/api'
+import sendMessage from '../common/sendMessage/message'
+import {getBalance,balancePay} from './common/api'
+import {loadingToast} from '../common/weui/weui' // 导入微信toast样式
+import {wxPay} from './common/wxJsSdk'
 import {isLogined} from '../common/loginValidate/loginValidate'
 isLogined(loginedOperation)
 function loginedOperation () {
@@ -17,7 +20,7 @@ function loginedOperation () {
   const tiemConsumedDom = document.getElementById('tiemConsumed')
   const washPrice = document.getElementById('washPrice')
   const balance = document.getElementById('balance')
-  const balancePay = document.getElementById('balancePay')
+  const balancePayDom = document.getElementById('balancePay')
   // 记录当前步骤
   let stepIndex = 0
   // 保存选中的支付方式
@@ -40,12 +43,10 @@ function loginedOperation () {
   // 下一步
   nextStepBtn.addEventListener('click',function(){
     if(this.getAttribute('enable')!=='true') return false
-    bodyDom.setAttribute('step',stepStr[stepIndex++])
+    stepIndex < 2 && bodyDom.setAttribute('step',stepStr[stepIndex++])
     stepIndex === 2 && thirdOperation()
-    if(stepIndex===3){
-    // 第四步开始计算耗时
-      beginTime()
-    }
+    // 付款开始
+    stepIndex===3 && paymentOpetation()
   })
   // 耗时计算
   function beginTime () {
@@ -82,9 +83,10 @@ function loginedOperation () {
       .then(data=>{
         balance.innerHTML = data.toFixed(2)
         if(data<price) {
-          balancePay.setAttribute('insufficient','true')
+          balancePayDom.setAttribute('insufficient','true')
         }
       })
+    bodyDom.setAttribute('step',stepStr[stepIndex++])
   }
   // 给支付选项设置选中功能
   for(let li of chooicesList) {
@@ -95,5 +97,42 @@ function loginedOperation () {
         payChoosed.setAttribute('choosed','true')
       }
     })
+  }
+  function paySuccess() {
+    bodyDom.setAttribute('step',stepStr[stepIndex++])
+    beginTime()
+    console.log(paySuccess)
+    loadingToast({hide:true}) 
+  }
+  function fail (err) {
+    sendMessage({msg:'支付失败：' + err}) 
+    loadingToast({hide:true})   
+  }
+  function paymentOpetation () {
+    let payType = payChoosed.getAttribute('type')
+    loadingToast({msg:'加载中，请稍候...'})
+    if (payType === 'balance') {
+      balancePay()
+        .then(paySuccess)
+        .catch(fail)
+    } else {
+      wxPay({
+        payInfo:{
+          type:1,
+          finalmoney:10,
+        },
+        success () {           
+          sendMessage({msg:'充值金额成功！'})     
+        },
+        fail,
+        cancel () {
+          sendMessage({msg:'您已取消支付操作....'})
+        },
+        complete () {
+          loadingToast({hide:true})            
+        },
+      })
+    }
+    
   }
 }

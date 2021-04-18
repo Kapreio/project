@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>
         <%= htmlWebpackPlugin.options.title%>
-    </title>>
+    </title>
     <script>
         // 计算html font-size
         // 保证7.5rem等于屏幕宽度
@@ -69,13 +69,13 @@
         <p class="price">￥<span id="washPrice">10.00</span></p>
         <p>洗车费用</p>
         <ul id="chooices">
-            <li id="balancePay" class="balance-pay">
+            <li id="balancePay" class="balance-pay" type="balance">
                 会员余额支付
                 <span>账户余额：
                     <span id="balance">100.00元</span>
                 </span>
             </li>
-            <li class="wechat-pay">
+            <li class="wechat-pay" type="weixin">
                 微信支付
             </li>
         </ul>

@@ -202,6 +202,20 @@ export function jsPay(params) {
     data: params,
   })
 }
+/**
+ * 用户 / 洗车（使用余额支付）
+ *
+ * @export
+ * @param {*} params
+ * @returns
+ */
+export function balancePay(params) {
+  return axiosCreation({
+    url: '/wx/pay/balancepay',
+    method: 'POST',
+    data: params,
+  })
+}
 
 export function getWxAutoUrl() {
   return getWxCodeurl()
