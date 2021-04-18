@@ -34,7 +34,7 @@ function loginedOperation () {
     getRelevanceList()
       .then(data=>{
         telList = data
-        list.innerHTML = splitLi(data)
+        list.innerHTML = splitLi(telList)
       })
   }
   updateTelList()
