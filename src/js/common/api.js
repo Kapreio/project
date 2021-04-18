@@ -22,9 +22,9 @@ axiosIns.interceptors.response.use(function (rawResp = {data: {}}) {
   console.log(rawResp,rawResp.data.status)
   if (rawResp.data.msg === 'success' && rawResp.data.status === 10200) { // 数据获取成功
     return rawResp.data.data
-  } else if(rawResp.data.status === 10402 || rawResp.data.status === 10401 || rawResp.data.status === 10408){
+  } else if(rawResp.data.status === 10401 || rawResp.data.status === 10402 || rawResp.data.status === 10408){
     wxLoginBack()
-  } else if(rawResp.data.status === 10500){
+  } else if(rawResp.data.status === 10407){
     alert('当前页面需要登录后才能访问，请登录！') 
     document.body.innerHTML = '<div>请登录！</div>'
     location.href = `login.html?href=${location.href}&ubind=true`
@@ -256,9 +256,9 @@ export function wxLoginBack(){
       code && wxLogin({code})
         .then(data=>{
           setCookie('logined',data)
-          qs.urlParse().href 
-            ? (location.href = qs.urlParse().href)
-            : location.reload()
+          // qs.urlParse().href 
+          //   ? (location.href = qs.urlParse().href)
+          //   : location.reload()
         })
     })
 } 
