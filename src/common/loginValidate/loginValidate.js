@@ -1,10 +1,11 @@
 import './loginValidate.less'
-import {getCookie,setCookie} from '../../js/common/utils'
-window.setCookie = setCookie
-if (!getCookie('logined')) {
-  alert('当前页面需要登录后才能访问，请登录！') 
-  document.body.innerHTML = '<div>请登录！</div>'
-  location.href = `login.html?href=${location.href}`
-} else {
-  document.body.setAttribute('login',new Date().getTime())
+import {getCookie} from '../../js/common/utils'
+import {wxLoginBack} from '../../js/common/api'
+export function isLogined(backfun) {
+  if (!getCookie('logined')) {
+    wxLoginBack()
+  } else {
+    document.body.setAttribute('login',new Date().getTime())
+    typeof backfun === 'function' && backfun()
+  }
 }
