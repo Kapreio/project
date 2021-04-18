@@ -33,20 +33,21 @@ function loginedOperation () {
   // 设置默认支付方式选中
   payChoosed.setAttribute('choosed','true')
   // 显示第一步UI
-  // bodyDom.setAttribute('step',stepStr[stepIndex])
-  bodyDom.setAttribute('step',stepStr[2])
-  // 更新当前步骤
-  stepIndex++
+  bodyDom.setAttribute('step',stepStr[stepIndex++])
+  //  bodyDom.setAttribute('step',stepStr[2])
   // 设置下一步按钮可用
   nextStepBtn.setAttribute('enable','true')
 
   // 下一步
   nextStepBtn.addEventListener('click',function(){
-    if(this.getAttribute('enable')!=='true') return false
-    stepIndex < 2 && bodyDom.setAttribute('step',stepStr[stepIndex++])
-    stepIndex === 2 && thirdOperation()
+    if(this.getAttribute('enable')!=='true') return false 
     // 付款开始
-    stepIndex===3 && paymentOpetation()
+    stepIndex === 3 && paymentOpetation() 
+
+    stepIndex === 2 && thirdOperation()          
+    console.log(stepIndex)
+    stepIndex < 2 && bodyDom.setAttribute('step',stepStr[stepIndex++])
+    console.log(stepIndex)
   })
   // 耗时计算
   function beginTime () {
@@ -79,7 +80,9 @@ function loginedOperation () {
     },1000)
   }
   function thirdOperation() {
-    getBalance()
+    getBalance({
+      money:0.01,
+    })
       .then(data=>{
         balance.innerHTML = data.toFixed(2)
         if(data<price) {
