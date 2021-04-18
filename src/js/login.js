@@ -108,14 +108,5 @@ loginBtn.addEventListener('click',function(){
       })
   }    
 })
-// console.log(telInput,codeInput,getCode)
-getWxCode()
-  .then(code=>{
-    wxLogin({code})
-      .then(data=>{
-        setCookie('logined',data)
-        qs.urlParse().href && (location.href = qs.urlParse().href)
-      })
-  })
 
 
