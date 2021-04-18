@@ -16,16 +16,16 @@ function loginedOperation () {
   const chargeAfter =  document.getElementById('chargeAfter')
   const afterBalance =  document.getElementById('afterBalance')
   const chargeNow = document.getElementById('chargeNow')
-  // let query = qs.urlParse() || {}
+  let balanceData = {}
   // chargeLog.href = chargeLog.href +  `?id=${query.id}`
 
   getBalance()
     .then(data=>{
-      query.balance = data || 0
-      balance.innerHTML = query.balance.toFixed(2)
+      balanceData.balance = data || 0
+      balance.innerHTML = balanceData.balance.toFixed(2)
       chargeInput.addEventListener('input',function(){
         if(this.value){
-          afterBalance.innerHTML = query.balance - 0 + parseInt(this.value)
+          afterBalance.innerHTML = balanceData.balance - 0 + parseInt(this.value)
           chargeAfter.setAttribute('show',true)
         } else {
           chargeAfter.setAttribute('show',false)
@@ -41,8 +41,8 @@ function loginedOperation () {
             },
             success () {           
               sendMessage({msg:'充值金额成功！'})     
-              query.balance =  query.balance - 0 + parseFloat(chargeInput.value)
-              balance.innerHTML = query.balance     
+              balanceData.balance =  balanceData.balance - 0 + parseFloat(chargeInput.value)
+              balance.innerHTML = balanceData.balance     
               chargeInput.value = ''
             },
             fail(err){
