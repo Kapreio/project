@@ -1,7 +1,7 @@
 import '../css/common.css'
 import '../css/balance.less'
 import sendMessage from '../common/sendMessage/message'
-import qs from './common/qs'
+// import qs from './common/qs'
 import {getBalance} from './common/api'
 import {loadingToast} from '../common/weui/weui' // 导入微信toast样式
 import {wxPay} from './common/wxJsSdk'
@@ -11,13 +11,13 @@ isLogined(loginedOperation)
 function loginedOperation () {
 
   const balance = document.getElementById('balance')
-  const chargeLog = document.getElementById('chargeLog')
+  // const chargeLog = document.getElementById('chargeLog')
   const chargeInput = document.getElementById('chargeInput')
   const chargeAfter =  document.getElementById('chargeAfter')
   const afterBalance =  document.getElementById('afterBalance')
   const chargeNow = document.getElementById('chargeNow')
-  let query = qs.urlParse() || {}
-  chargeLog.href = chargeLog.href +  `?id=${query.id}`
+  // let query = qs.urlParse() || {}
+  // chargeLog.href = chargeLog.href +  `?id=${query.id}`
 
   getBalance()
     .then(data=>{
