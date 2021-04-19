@@ -1,4 +1,4 @@
-import {getWxJsSign,jsPay} from './api' // 导入扫码相关接口
+import {getWxJsSign,postWxScan,jsPay} from './api' // 导入扫码相关接口
 import {loadingToast} from '../../common/weui/weui' // 导入微信toast样式
 // window.loadingToast = loadingToast 
 const dev = process.env.NODE_ENV === 'development'
@@ -25,14 +25,21 @@ function wxConfig (jsApiList,backFuc) {
  */
 function scanCode() {  
   // 调用微信扫码API
-  loadingToast() // 显示加载中toast
   wx.scanQRCode({  
     needResult : 1,  // 自行处理扫码结果
     scanType : [ 'qrCode', 'barCode' ],  // 扫码方式
     success : function(res) {  // 扫码成功
       // alert(`success!\n Result:${res.resultStr}`)
-      loadingToast({hide:true}) // 显示加载中toast
-      location.href = `wash.html?resultStr=${res.resultStr}`
+      loadingToast() // 显示加载中toast
+      // 发送扫码结果
+      postWxScan({
+        name:res.resultStr,
+      })
+        .then(()=>{
+          // alert(JSON.stringify(data))
+          // 隐藏加载中toast
+          loadingToast({hide:true})
+        })
     },  
     fail : function(res) {   // 扫码失败
       alert('fail' + JSON.stringify(res))

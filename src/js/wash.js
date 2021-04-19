@@ -1,24 +1,12 @@
 import '../css/common.css'
 import '../css/wash.less'
 import sendMessage from '../common/sendMessage/message'
-import {getBalance,balancePay,postWxScan} from './common/api'
+import {getBalance,balancePay} from './common/api'
 import {loadingToast} from '../common/weui/weui' // 导入微信toast样式
 import {wxPay} from './common/wxJsSdk'
 import {isLogined} from '../common/loginValidate/loginValidate'
-import qs from './common/qs'
 isLogined(loginedOperation)
 function loginedOperation () {
-
-  loadingToast() // 显示加载中toast
-  // 发送扫码结果
-  postWxScan({
-    name:qs.urlParse().resultStr,
-  })
-    .then(()=>{
-      // alert(JSON.stringify(data))
-      // 隐藏加载中toast
-      loadingToast({hide:true})
-    })
   const price = 10.00
   // body Dom用于步骤UI
   const bodyDom = document.body
@@ -114,9 +102,9 @@ function loginedOperation () {
     })
   }
   function paySuccess() {
-    sendMessage({msg:'支付成功，马上开始洗车...'}) 
     bodyDom.setAttribute('step',stepStr[stepIndex++])
     beginTime()
+    console.log(paySuccess)
     loadingToast({hide:true}) 
   }
   function fail (err) {
@@ -136,7 +124,9 @@ function loginedOperation () {
           type:1,
           finalmoney:10,
         },
-        success:paySuccess,
+        success () {           
+          sendMessage({msg:'充值金额成功！'})     
+        },
         fail,
         cancel () {
           sendMessage({msg:'您已取消支付操作....'})
