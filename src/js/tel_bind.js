@@ -72,7 +72,7 @@ function loginedOperation () {
       tel.focus()
     } else {
       body.setAttribute('tel_binding','true')
-      relevanceAdd({name:tel.value.trim()})
+      relevanceAdd({phone:tel.value.trim()})
         .then(()=>{
           sendMessage({msg:'添加成功'})
           body.setAttribute('tel_binding','false') 
