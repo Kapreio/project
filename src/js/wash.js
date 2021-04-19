@@ -1,7 +1,7 @@
 import '../css/common.css'
 import '../css/wash.less'
 import sendMessage from '../common/sendMessage/message'
-import {getBalance,balancePay,postWxScan} from './common/api'
+import {balancePay,postWxScan} from './common/api'
 import {loadingToast} from '../common/weui/weui' // 导入微信toast样式
 import {wxPay} from './common/wxJsSdk'
 import {isLogined} from '../common/loginValidate/loginValidate'
@@ -10,16 +10,8 @@ isLogined(loginedOperation)
 function loginedOperation () {
 
   loadingToast() // 显示加载中toast
-  // 发送扫码结果
-  postWxScan({
-    name:qs.urlParse().resultStr,
-  })
-    .then(()=>{
-      // alert(JSON.stringify(data))
-      // 隐藏加载中toast
-      loadingToast({hide:true})
-    })
-  const price = 10.00
+
+  let price = 10.00
   // body Dom用于步骤UI
   const bodyDom = document.body
   // 下一步按错
@@ -36,14 +28,33 @@ function loginedOperation () {
   // 记录当前步骤
   let stepIndex = 0
   // 保存选中的支付方式
-  let payChoosed = chooicesList[0]
+  let payChoosed
   // 用时更新定时器保存变量
   let timeConsumedInter 
   // 记录总用时，单位S
   let timeConsumed = 3600
-  washPrice.innerHTML = price.toFixed(2)
-  // 设置默认支付方式选中
-  payChoosed.setAttribute('choosed','true')
+
+  // 发送扫码结果
+  postWxScan({
+    name:qs.urlParse().resultStr,
+  })
+    .then((data)=>{
+      // alert(JSON.stringify(data))
+      // 隐藏加载中toast
+      washPrice.innerHTML =data.price && data.price.toFixed(2)
+      balance.innerHTML = data.balance.toFixed(2)
+      if(data.balance<data.price) {
+        payChoosed = chooicesList[1]
+        balancePayDom.setAttribute('insufficient','true')
+      } else {
+        payChoosed = chooicesList[0]
+      }
+      // 设置默认支付方式选中
+      payChoosed.setAttribute('choosed','true')
+      loadingToast({hide:true})
+    })
+ 
+ 
   // 显示第一步UI
   bodyDom.setAttribute('step',stepStr[stepIndex++])
   //  bodyDom.setAttribute('step',stepStr[2])
@@ -54,12 +65,8 @@ function loginedOperation () {
   nextStepBtn.addEventListener('click',function(){
     if(this.getAttribute('enable')!=='true') return false 
     // 付款开始
-    stepIndex === 3 && paymentOpetation() 
-
-    stepIndex === 2 && thirdOperation()          
-    console.log(stepIndex)
-    stepIndex < 2 && bodyDom.setAttribute('step',stepStr[stepIndex++])
-    console.log(stepIndex)
+    stepIndex === 3 && paymentOpetation()
+    stepIndex < 3 && bodyDom.setAttribute('step',stepStr[stepIndex++])
   })
   // 耗时计算
   function beginTime () {
@@ -91,21 +98,13 @@ function loginedOperation () {
       }
     },1000)
   }
-  function thirdOperation() {
-    getBalance({
-      money:0.01,
-    })
-      .then(data=>{
-        balance.innerHTML = data.toFixed(2)
-        if(data<price) {
-          balancePayDom.setAttribute('insufficient','true')
-        }
-      })
-    bodyDom.setAttribute('step',stepStr[stepIndex++])
-  }
   // 给支付选项设置选中功能
   for(let li of chooicesList) {
     li.addEventListener('click',function(){
+      if(this.getAttribute('insufficient')==='true'){
+        sendMessage({msg:'余额不足'})
+        return false
+      }
       if(this.getAttribute('choosed') !== 'true') {
         payChoosed && payChoosed.setAttribute('choosed','false')
         payChoosed = this

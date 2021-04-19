@@ -151,6 +151,11 @@ li {
                 border-radius: 50%;
                 border: solid 2px #000000;
             }
+            &[insufficient=true] {
+                &:after{
+                    border-color: #9b9b9b;
+                }
+            }
             &[choosed=true]:after {
                 border-width: 0;
                 background: transparent url('../img/checkbox_on.png') center/cover;
