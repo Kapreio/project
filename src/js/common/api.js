@@ -297,6 +297,7 @@ export function wxLoginBack(){
         .then(data=>{
           // 登录成功，存储logined字段，记录登录状态；
           setCookie('logined',data || {})
+          location.href = qs.urlParse().href || location.href
         })
     })
 } 
