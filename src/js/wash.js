@@ -53,6 +53,10 @@ function loginedOperation () {
       payChoosed.setAttribute('choosed','true')
       loadingToast({hide:true})
     })
+    .catch(err=>{
+      sendMessage({msg:err})
+      loadingToast({hide:true})
+    })
  
  
   // 显示第一步UI
