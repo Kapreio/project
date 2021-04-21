@@ -53,6 +53,10 @@ function loginedOperation () {
       // 隐藏加载中toast
       loadingToast({hide:true})
     })
+    .catch(err=>{
+      sendMessage({msg:err})
+      loadingToast({hide:true})
+    })
  
  
   // 显示第一步UI
