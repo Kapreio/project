@@ -39,22 +39,18 @@ function loginedOperation () {
     name:qs.urlParse().resultStr,
   })
     .then((data)=>{
-      // alert(JSON.stringify(data))
-      // 隐藏加载中toast
-      washPrice.innerHTML =data.price && data.price.toFixed(2)
-      balance.innerHTML = data.balance.toFixed(2)
-      if(data.balance<data.price) {
-        payChoosed = chooicesList[1]
-        balancePayDom.setAttribute('insufficient','true')
+      washPrice.innerHTML =data.price && data.price.toFixed(2) // 更新价格显示
+      balance.innerHTML = data.balance.toFixed(2) // 更新余额显示
+
+      if(data.balance<data.price) { // 余额小于价格
+        payChoosed = chooicesList[1] // 微信支付为默认选中
+        balancePayDom.setAttribute('insufficient','true') // 标记余额不足
       } else {
-        payChoosed = chooicesList[0]
+        payChoosed = chooicesList[0] // 余额支付为默认选中
       }
-      // 设置默认支付方式选中
-      payChoosed.setAttribute('choosed','true')
-      loadingToast({hide:true})
-    })
-    .catch(err=>{
-      sendMessage({msg:err})
+      // 设置默认支付方式选中状态
+      payChoosed.setAttribute('choosed','true')      
+      // 隐藏加载中toast
       loadingToast({hide:true})
     })
  
@@ -95,7 +91,7 @@ function loginedOperation () {
       second < 10?(second = '0'+second):''
       // 拼接耗时字串
       tiemConsumedDom.innerHTML = `${hour}${minute}:${second}`
-      // 完成清除计时器
+      // 完成清除计时器，后续需要使用接口
       if(timeConsumed>=3665){
         clearInterval(timeConsumedInter)
         bodyDom.setAttribute('step',stepStr[stepIndex++])
@@ -106,45 +102,54 @@ function loginedOperation () {
   for(let li of chooicesList) {
     li.addEventListener('click',function(){
       if(this.getAttribute('insufficient')==='true'){
+        // 记为余额不足
         sendMessage({msg:'余额不足'})
         return false
       }
       if(this.getAttribute('choosed') !== 'true') {
+        // 当前支付方式没有处于选中状态
         payChoosed && payChoosed.setAttribute('choosed','false')
         payChoosed = this
         payChoosed.setAttribute('choosed','true')
       }
     })
   }
+  // 支付成功回调
   function paySuccess() {
     sendMessage({msg:'支付成功，马上开始洗车...'}) 
     bodyDom.setAttribute('step',stepStr[stepIndex++])
     beginTime()
     loadingToast({hide:true}) 
   }
+  // 支付失败回调
   function fail (err) {
     sendMessage({msg:'支付失败：' + err}) 
     loadingToast({hide:true})   
   }
+  // 支付相关操作
   function paymentOpetation () {
+    // 获取选中的支付类型
     let payType = payChoosed.getAttribute('type')
+    // 显示toast
     loadingToast({msg:'加载中，请稍候...'})
     if (payType === 'balance') {
+      // 余额支付
       balancePay()
         .then(paySuccess)
         .catch(fail)
     } else {
+      // 微信支付
       wxPay({
         payInfo:{
-          type:1,
-          finalmoney:10,
+          type:1, // 支付类型，1表示洗车
+          finalmoney:10, // 支付金额
         },
-        success:paySuccess,
-        fail,
-        cancel () {
+        success:paySuccess, // 设置成功回调
+        fail, // 失败回调
+        cancel () { // 取消支付回调
           sendMessage({msg:'您已取消支付操作....'})
         },
-        complete () {
+        complete () { // 支付操作结束
           loadingToast({hide:true})            
         },
       })

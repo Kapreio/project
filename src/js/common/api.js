@@ -18,17 +18,13 @@ axiosIns.interceptors.request.use(config => {
   return Promise.reject(error)
 })
 // 对请求的响应进行拦截
-// 状态码详情 https://note.youdao.com/share/?id=a81f243d3dfe94dd87fb8932d920ff8f&type=note#/
 axiosIns.interceptors.response.use(function (rawResp = {data: {}}) {
+  console.log(rawResp,rawResp.data.status)
   if (rawResp.data.msg === 'success' && rawResp.data.status === 10200) { // 数据获取成功
     return rawResp.data.data
   } else if(rawResp.data.status === 10401 || rawResp.data.status === 10402 || rawResp.data.status === 10408){
-    // 状态码：10401  "未登录或超时";10402  "用户未登录或超时";10408  "用户未授权或超时"
-    // 需要重新进行静默微信登录
     wxLoginBack()
-  } else if(rawResp.data.status === 10407){    
-    // 状态码：10407 "未绑定手机号码"，需要跳转到登录页面进行手机绑定
-    // 用户感知为手机号登录
+  } else if(rawResp.data.status === 10407){
     alert('当前页面需要登录后才能访问，请登录！') 
     document.body.innerHTML = '<div>请登录！</div>'
     location.href = `login.html?href=${location.href}&ubind=true`
@@ -48,7 +44,13 @@ function axiosCreation ({method = 'GET'} = {}) {
   let arg = arguments[0]
   let opts = Object.assign({method}, arg)
   opts.method === 'GET' && !opts.params && (opts.params = opts.data)
+  opts.data && opts.data.token && (opts.auth = {
+    username: 'janedoe',
+    password: 's00pers3cret',
+  })
+
   // enableQs && opts.method !== 'GET' && opts.data && (opts.data = qs.stringify(opts.data))
+  
   return axiosIns(opts)
 }
 /**
@@ -130,13 +132,7 @@ export function relevanceCancel (params) {
     data: params,
   })
 }
-/**
- * 短信 / 发送短信
- * @param {Object} params 
- * {
- *    phone:'15575104709' // 手机号码
- * }
- */
+//   短信 / 发送短信
 export function smsPost (params) {
   return axiosCreation({
     url: '/wx/sms/post',
@@ -145,13 +141,6 @@ export function smsPost (params) {
   })
 }
 // 微信 / 获取 js 签名
-/**
- * 
- * @param {Object} params
- * {
- *    url:'http://carwash1.eveabc.com/xx.html?a=2&b3' // 当前网页的URL
- * } 
- */
 export function getWxJsSign (params) {
   return axiosCreation({
     url: '/wx/jssign',
@@ -159,65 +148,10 @@ export function getWxJsSign (params) {
     data: params,
   })
 }
-// 微信 / 扫一扫 发送扫码结果给后端
-/**
- * 
- * @param {Object} params 
- * {
- * name:'sdfdsfds' // 扫码后的内容
- * }
- */
+// 微信 / 扫一扫
 export function postWxScan (params) {
   return axiosCreation({
     url: '/wx/scan',
-    method: 'POST',
-    data: params,
-  })
-}
-
-/**
- * 用户 / 用户绑定手机号
- * @param {Object} params
- * {
-*   phone 手机号码
-*   code 短信验证码
- * }
- */
-export function bindPhone(params) {
-  return axiosCreation({
-    url: '/wx/user/bindphone',
-    method: 'POST',
-    data: params,
-  })
-}
-/**
- * 微信 / 微信支付，生成预支付订单及数据，用于js sdk支付使用
- *
- * @param {Object} params
- * {
- *    finalmoney:10, // 洗车或充值金额
- *    type: 1 // 业务类型：1：洗车 2：充值
- * }
- */
-export function jsPay(params) {
-  return axiosCreation({
-    url: '/wx/pay/jspay',
-    method: 'POST',
-    data: params,
-  })
-}
-/**
- * 用户 / 洗车（使用余额支付）
- * 
- * @param {Object} params
- * {
- *    money:10,//洗车金额,可省略
- * }
- * @returns
- */
-export function balancePay(params) {
-  return axiosCreation({
-    url: '/wx/pay/balancepay',
     method: 'POST',
     data: params,
   })
@@ -230,12 +164,60 @@ export function getWxCodeurl(params) {
     data: params,
   })
 }
+// 微信 / 登录
+export function wxLogin(params) {
+  return axiosCreation({
+    url: '/wx/login',
+    method: 'POST',
+    data: params,
+  })
+}
 
 /**
- * 根据后端返回微信授权URL,拼装成合法的微信授权
- * 需要将redirect_uri的值修改为当前页面的URL
+ * 用户 / 用户绑定手机号
+ * @export
+ * @param {*} params
+ * phone 手机号码
+ * code 短信验证码
+ * @returns
  */
-export function getWxAuthUrl() {
+export function bindPhone(params) {
+  return axiosCreation({
+    url: '/wx/user/bindphone',
+    method: 'POST',
+    data: params,
+  })
+}
+/**
+ * 微信 / 微信支付，生成预支付订单及数据，用于js sdk支付使用
+ *
+ * @export
+ * @param {*} params
+ * @returns
+ */
+export function jsPay(params) {
+  return axiosCreation({
+    url: '/wx/pay/jspay',
+    method: 'POST',
+    data: params,
+  })
+}
+/**
+ * 用户 / 洗车（使用余额支付）
+ *
+ * @export
+ * @param {*} params
+ * @returns
+ */
+export function balancePay(params) {
+  return axiosCreation({
+    url: '/wx/pay/balancepay',
+    method: 'POST',
+    data: params,
+  })
+}
+
+export function getWxAutoUrl() {
   return getWxCodeurl()
     .then(url=>{
       let urlStr = url.split('?')[0]
@@ -246,58 +228,39 @@ export function getWxAuthUrl() {
         {redirect_uri:location.href}
       ))
       urlStr += '?' + querys
+      console.log(qs.parse(querys))
       return  urlStr
     })
 }
-/**
- * 获取用于登录的微信code
- * @return 一个promise实例 
- */
+
 export function getWxCode(){
   let querys = qs.urlParse()
-  let wxCode = getCookie('wxCode') 
-  if (wxCode) { // 本地已经存储微信code，直接返回
+  let wxCode = getCookie('wxCode')
+  if (wxCode && querys.hasCode) {
     return Promise.resolve(wxCode)
   }
-  if (querys.code) { // url上已经带code参数，表示已经通过授权URL跳转回来
-    setCookie('wxCode',querys.code,5) // 存储微信code,有效时间5分钟
+  if (querys.code) {
+    setCookie('wxCode',querys.code,5)
     return Promise.resolve(querys.code)
   }
-  // 否则，调用获取授权Url方法
-  // 并通过跳转url获取微信code
-  getWxAuthUrl()
+  getWxAutoUrl()
     .then(url=>{
       location.href = url
     })
   return Promise.resolve()
 }
 
-// 微信 / 登录
-/**
- * 
- * @param {Object} params
- * {
- *    code:'021YcqyR1pzrt91tevAR1gVGyR1Ycqyp',// 通过跳转授权Url返回的code
- * } 
- */
-export function wxLogin(params) {
-  return axiosCreation({
-    url: '/wx/login',
-    method: 'POST',
-    data: params,
-  })
-}
-// 静默授权登录
 export function wxLoginBack(){
-  // 获取code
   getWxCode()
     .then(code=>{
-      // 获取code成功，进行登陆
       code && wxLogin({code})
         .then(data=>{
-          // 登录成功，存储logined字段，记录登录状态；
-          setCookie('logined',data || {})
-          location.href = qs.urlParse().href || location.href
+          setCookie('logined',data)
+          // qs.urlParse().href 
+          //   ? (location.href = qs.urlParse().href)
+          //   : location.reload()
         })
     })
 } 
+
+
