@@ -36,17 +36,17 @@ function getCookie(c_name) {
  * 保存cookies
  * @param {string} c_name       cookie的名称
  * @param {string} value        cookie值
- * @param {numbers} expire      cookie有效时间 分钟
+ * @param {numbers} expire      cookie有效时间分钟,默认一年
  */
-function setCookie(c_name, value, expire) {
+function setCookie(c_name, value, expire = 365*10*24*60) {
   var exdate = new Date()
-  exdate.setMinutes(exdate.getMinutes() + (expire ? expire : 365*10*24*60))
+  exdate.setMinutes(exdate.getMinutes() + expire )
   if (localStorage) {
     //如果支持localstorage,则使用localstorage保存数据
     localStorage[c_name] = JSON.stringify({ val: value, date: exdate })
   } else {
     //否则使用cookies保存数据
-    document.cookie = `${c_name}=${escape(value) + (expire == null ? '' : ';expires=' + exdate.toGMTString())}`
+    document.cookie = `${c_name}=${escape(value)};expires=${exdate.toGMTString()}`
   }			
 }
 /**
