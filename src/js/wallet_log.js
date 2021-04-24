@@ -1,6 +1,6 @@
 import '../css/common.css'
 import '../css/wallet_log.less'
-import qs from './common/qs'
+import qs from './common/qs' // 引入qs功能
 import moment from 'moment'
 import {getRecord} from './common/api'
 import {isLogined} from '../common/loginValidate/loginValidate'
